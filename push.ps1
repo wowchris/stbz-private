@@ -1,6 +1,7 @@
+# 一键推送到GitHub
 git add .
-git commit -m "代码更新 + 聊天记录"
+git commit -m "Sync code and chat history"
 git push origin main
 
-Write-Host "✅ 全部上传完成！" -ForegroundColor Green
+Write-Host "✅ All changes pushed to GitHub successfully" -ForegroundColor Green
 pause
