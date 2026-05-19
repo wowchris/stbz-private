@@ -1,0 +1,40 @@
+<!--  关于我们  -->
+<div class="about-con">
+    <div class="about-list">
+        <ul>
+            <li>
+                <a href="./aboutus?1">企业简介</a>
+            </li>
+            <li>
+                <a href="./aboutus?2">发展历程</a>
+            </li>
+            <li>
+                <a href="./aboutus?3">荣誉资质</a>
+            </li>
+            <li>
+                <a href="./aboutus?4">团队介绍</a>
+            </li>
+            <li>
+                <a href="./aboutus?5">新闻动态</a>
+            </li>
+        </ul>
+        <p class="about-gs">
+           {{{.webSite.bottom_copyright}}}
+            <img class="icon-image" style="margin-right:4px;" src="/web/image/national.png"/>
+            <a href="https://beian.miit.gov.cn" target="_blank" style="color: #959BA8;"> {{{.webSite.record_num}}} </a>
+        </p>
+    </div>
+    <div class="about-us" style="position:relative;">
+        <p class="us-title">联系我们
+            {{{if .webSite.ssl}}}
+            <a href=" " target="_blank" style="position: absolute;right: 10px;bottom:50px;display: inline-block;height: 38px;">
+        <div style="width:100%;height:100%;position: absolute;top: 0;left: 0;"></div><embed src="https://program.xinchacha.com/web/1623138738085249024=*.qfuy.com.svg"width="103" height="38" type="image/svg+xml" pluginspage="//www.adobe.com/svg/viewer/install/"/></a >
+        {{{ end }}}
+        </p>
+        <p>联系电话：{{{.webSite.hotline_tel_1}}}</p>
+        <p>公司地址：{{{.webSite.company_address}}}</p>
+    </div>
+</div>
+
+
+

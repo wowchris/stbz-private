@@ -1,0 +1,107 @@
+version: '3'
+
+services:
+
+  # The 'setup' service runs a one-off script which initializes the
+  # 'logstash_internal' and 'kibana_system' users inside Elasticsearch with the
+  # values of the passwords defined in the '.env' file.
+  #
+  # This task is only performed during the *initial* startup of the stack. On all
+  # subsequent runs, the service simply returns immediately, without performing
+  # any modification to existing users.
+  setup:
+    build:
+      context: setup/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    init: true
+    volumes:
+      - setup:/state:Z
+    environment:
+      TZ : 'Asia/Shanghai'
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
+      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}
+      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}
+    networks:
+      default:
+        ipv4_address: 192.168.210.100
+
+  elasticsearch:
+    build:
+      context: elasticsearch/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    volumes:
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,z
+      - elasticsearch:/usr/share/elasticsearch/data:z
+    restart: always
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      TZ : 'Asia/Shanghai'
+      ES_JAVA_OPTS: -Xmx4096m -Xms2048m
+      # Bootstrap password.
+      # Used to initialize the keystore during the initial startup of
+      # Elasticsearch. Ignored on subsequent runs.
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
+      # Use single node discovery in order to disable production mode and avoid bootstrap checks.
+      # see: https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
+      discovery.type: single-node
+    networks:
+      default:
+        ipv4_address: 192.168.210.101
+
+  #logstash:
+  #  build:
+  #    context: logstash/
+  #    args:
+  #      ELASTIC_VERSION: ${ELASTIC_VERSION}
+  #  volumes:
+  #    - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
+  #    # 多管道
+  #    - ./logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro,Z
+  #    - ./logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
+  #  restart: always
+  #  ports:
+  #    - "5044:5044"
+  #    - "5000:5000/tcp"
+  #    - "5000:5000/udp"
+  #    - "9600:9600"
+  #  environment:
+  #    TZ : 'Asia/Shanghai'
+  #    LS_JAVA_OPTS: -Xmx4096m -Xms2048m
+  #    LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}
+  #  networks:
+  #    default:
+  #      ipv4_address: 192.168.210.102
+  #  depends_on:
+  #    - elasticsearch
+
+  kibana:
+    build:
+      context: kibana/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+    restart: always
+    ports:
+      - "5601:5601"
+    environment:
+      TZ : 'Asia/Shanghai'
+      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}
+    networks:
+      default:
+        ipv4_address: 192.168.210.103
+    depends_on:
+      - elasticsearch
+
+networks:
+   default:
+     external:
+       name: staticnet
+
+volumes:
+  setup:
+  elasticsearch:

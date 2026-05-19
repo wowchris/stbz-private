@@ -1,0 +1,17 @@
+#!/bin/bash
+
+
+i=0
+str='#'
+ch=('|' '\' '-' '/')
+index=0
+while [ $i -le 100 ]
+do
+	printf "[%-25s][%d%%][%c]\r" $str $(($i*1)) ${ch[$index]}
+	str+='#'
+	let i++
+	let index=i%2
+	sleep 1
+done
+printf "\n"
+

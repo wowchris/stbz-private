@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="Keywords" content={{{.channelSite.keywords}}}>
+  <meta name="Description" content={{{.channelSite.describe}}}>
+  <title>{{{.channelSite.title}}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/webShop/css/swiper.min.css">
+  <link rel="stylesheet" href="/webShop/css/public.css">
+</head>
+<body>
+<!--PC-->
+<div class="pc-content">
+  <div style="height:100%;width:100%;">
+    <header>
+      <div class="header-con">
+        <ul class="nav" id="nav">
+          <li>
+            <img src="{{{.webSite.toplogo}}}" class="top-logo" alt="">
+          </li>
+          <li class="custom-cursor">
+            <a href="http://{{{ .channelSite.mainDomain}}}">首页</a>
+          </li>
+          <li class="custom-cursor">
+            <a href="http://{{{ .channelSite.openDomain}}}" target="_blank">开放平台</a>
+          </li>
+          <li class="custom-cursor">
+            <a href="/" target="_blank">云仓</a>
+          </li>
+          <li class="custom-cursor">
+            <a href="http://{{{ .channelSite.mainDomain}}}/aboutus?1" target="_blank">关于我们</a>
+          </li>
+        </ul>
+        <div class="register-login-btn">
+          <div id="register" class="register-btn custom-cursor">注 册</div>
+          <div id="login" class="login-btn custom-cursor">登 录</div>
+        </div>
+      </div>
+    </header>
+    <!-- banner 轮播图 -->
+    <div class="swiper-container" id="banner-swiper">
+      <div class="swiper-wrapper">
+        {{{range $key, $value := .open_banner_lst}}}
+        {{{ if gt ($value.img_url|len) 0 }}}
+        <div class="swiper-slide">
+          {{{ if eq $value.redirect_url "" }}}
+          <a href="javascript:void(0);" >
+          <img style="width: 100%;height: 562px;" src="{{{$value.img_url}}}" alt="">
+          </a>
+          {{{ else }}}
+          <a href="{{{$value.redirect_url}}}" target="_blank" >
+            <img style="width: 100%;height: 562px;" src="{{{$value.img_url}}}" alt="">
+          </a>
+          {{{end}}}
+        </div>
+        {{{end}}}
+        {{{end}}}
+
+      </div>
+      <!-- 如果需要分页器 -->
+      <div class="swiper-pagination" id="banner-swiper-pagination"></div>
+    </div>
+<!--  核心优势  -->
+    <section class="advantage-main-con">
+      <div class="advantage">
+        <p class="advantage-title">核心优势</p>
+        <div class="advantage-con">
+          {{{range $k, $v := .open_advantage_lst}}}
+          <!--  单元 start -->
+          <div class="pre-advantage">
+            <dl class="dl-con">
+              <dt class="dl-con-ad1"></dt>
+              <dd>{{{$v.title}}}</dd>
+              <div class="pre-advantage-details">
+                <p class="ad-details-title">{{{$v.title}}}</p>
+                <p class="ad-details">
+                  {{{$v.content}}}
+                </p>
+              </div>
+            </dl>
+          </div>
+          <!--  单元 end -->
+          {{{end}}}
+        </div>
+      </div>
+    </section>
+<!--  入驻流程  -->
+    <section class="progress-main-con">
+      <p class="process-title">入驻流程和材料</p>
+      <div class="process-con">
+        <div class="process-steps">
+          <div class="pro-step">
+            <dl>
+              <dt class="step-one"></dt>
+              <dd>第一步：注册账号</dd>
+            </dl>
+            <span>无需等待</span>
+            <p>进入云仓官网，注册账号</p>
+            <p>注册完成后，填写相关信息</p>
+          </div>
+          <div class="pro-step">
+            <dl>
+              <dt class="step-two"></dt>
+              <dd>第二步：填写信息</dd>
+            </dl>
+            <span>约20分钟</span>
+            <p>确认在线协议填写公司主体信息</p>
+            <p>填写店铺信息提交相关资质</p>
+          </div>
+          <div class="pro-step">
+            <dl>
+              <dt class="step-three"></dt>
+              <dd>第三步：等待审核</dd>
+            </dl>
+            <span>约1-3个工作日</span>
+            <p>云仓工作人员会在1-3个工作日内</p>
+            <p>反馈审核结果，商家可通过登录查询审核进度</p>
+          </div>
+          <div class="pro-step">
+            <dl>
+              <dt class="step-four"></dt>
+              <dd>第四步：发布商品</dd>
+            </dl>
+            <span>无需等待</span>
+            <p>审核通过，商家登录后台</p>
+            <p>商家发布商品并上架</p>
+          </div>
+        </div>
+        <div class="process-mater">
+          <div class="pro-ma">
+            <p class="set-in-ma m-bg">入驻必备材料</p>
+            <div class="optional">
+              <ul>
+                <li>营业执照电子版</li>
+                <li>法人证件电子版</li>
+              </ul>
+            </div>
+
+          </div>
+          <div class="pro-ma">
+            <p class="set-in-ma n-m-bg">入驻选填材料</p>
+            <div class="optional">
+              <ul>
+                <li>品牌LOGO</li>
+                <li>其它行业资质</li>
+              </ul>
+              <ul>
+                <li>品牌授权（代理品需提供）</li>
+                <li>店铺LOGO</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+<!--  入驻品牌  -->
+    <section class="brand-main-con">
+      <p class="brands-title">这些品牌都已入驻</p>
+      <p class="brands-tip">我们已与各行业领域的优秀品牌达成合作</p>
+      <div id="brand-swiper">
+        <div id="brand-swiper-pagination"></div>
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            {{{range $k, $v := .logoUrlsJSON}}}
+            <div class="swiper-slide">
+              {{{range $key,$value := $v.logo_urls}}}
+              {{{if gt (len $value.url) 0}}}
+              <img class="pre-image" src="{{{$value.url}}}"/>
+              {{{end}}}
+              {{{end}}}
+            </div>
+            {{{end}}}
+          </div>
+        </div>
+        <div id="brand-swiper-button-prev"></div>
+        <div id="brand-swiper-button-next"></div>
+      </div>
+    </section>
+<!--  关于我们  -->
+    <footer class="pc-content">
+      <div class="contact">
+        <p>如果你想要更多的<span>了解</span>，请联系我们</p>
+        <p>{{{.webSite.hotline_tel_1}}}</p>
+      </div>
+      <div class="about-con">
+        <div class="about-list">
+          <ul>
+            <li>
+              <a href="http://{{{ .channelSite.mainDomain}}}/aboutus?1" target="_blank">企业简介</a>
+            </li>
+            <li>
+              <a href="http://{{{ .channelSite.mainDomain}}}/aboutus?2" target="_blank">发展历程</a>
+            </li>
+            <li>
+              <a href="http://{{{ .channelSite.mainDomain}}}/aboutus?3" target="_blank">荣誉资质</a>
+            </li>
+            <li>
+              <a href="http://{{{ .channelSite.mainDomain}}}/aboutus?4" target="_blank">团队介绍</a>
+            </li>
+            <li>
+              <a href="http://{{{ .channelSite.mainDomain}}}/aboutus?5" target="_blank">新闻动态</a>
+            </li>
+          </ul>
+          <p class="about-gs">
+            {{{.webSite.bottom_copyright}}}
+            <img class="icon-image" style="margin-right:4px;" src="/webShop/image/national.png" />
+            {{{.webSite.record_num}}}
+          </p>
+        </div>
+        <div class="about-us">
+          <p class="us-title">联系我们</p>
+          <p>联系电话：{{{.webSite.hotline_tel_1}}}</p>
+          <p>公司地址：{{{.webSite.company_address}}}</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
+<!-- 移动端 -->
+<div class="mb-contene">
+  <div>
+        <!-- banner 轮播图 -->
+        <div class="mb-swiper-container" id="mb-banner-swiper">
+          <div class="swiper-wrapper" >
+
+            {{{range $key, $value := .open_banner_lst}}}
+            {{{ if gt ($value.img_url|len) 0 }}}
+            <div class="swiper-slide">
+              {{{ if eq $value.redirect_url "" }}}
+              <a href="javascript:void(0);" >
+              <img style="width: 100%;height: 100%;"  src="{{{$value.img_url}}}" alt="">
+              </a>
+              {{{ else }}}
+              <a href="{{{$value.redirect_url}}}" target="_blank" >
+                <img style="width: 100%;height: 100%;"  src="{{{$value.img_url}}}" alt="">
+              </a>
+              {{{end}}}
+            </div>
+            {{{end}}}
+            {{{end}}}
+          </div>
+          <!-- 如果需要分页器 -->
+          <div class="swiper-pagination" id="banner-swiper-pagination"></div>
+        </div>
+        <div class="mb-menu-icon-con" >
+          <img src="/webShop/image/mobile-menu.png" alt="">
+        </div>
+        <div class="yinchang">
+          <ul class="mb-menu-list-con">
+            <div class="mb-menu-list-top">
+                <img src="/webShop/image/esc.png">
+            </div>
+            <li><a href="http://{{{ .channelSite.mainDomain}}}">首页</a></li>
+            <li><a href="http://{{{ .channelSite.openDomain}}}">开放平台</a></li>
+            <li><a href="/">云仓</a></li>
+            <li><a href="http://{{{ .channelSite.mainDomain}}}/aboutus?1">关于我们</a></li>
+            <li><a id="mobileRegister" href="javascript:void(0);">登录</a></li>
+            <li><a id="mobileLogin"  href="javascript:void(0);">注册</a></li>
+          </ul>
+        </div>
+        <!-- 核心优势 -->
+        <div class="ad-content">
+          <p class="ad-text">核心优势</p>
+          <div class="mb-ad-container" id="mb-ad-swiper">
+            <div class="swiper-wrapper">
+
+              {{{range $k, $v := .open_advantage_lst}}}
+              <!--  单元 start -->
+              <div class="swiper-slide">
+                <div class="mb-ad-advantage-details">
+                  <div class="mb-ad-details-pic-con mb-ad-pic1"></div>
+                  <p class="mb-ad-details-title">{{{$v.title}}}</p>
+                  <p class="mb-ad-details"> {{{$v.content}}}</p>
+                </div>
+              </div>
+              <!--  单元 end -->
+              {{{end}}}
+            </div>
+          </div>
+        </div>
+              <!-- 入驻流程 -->
+      <div class="mb-process-con mobile-content">
+        <p class="mb-process-con-title">入驻流程和材料</p>
+        <div class="mb-process">
+          <div class="mb-pre-process-con">
+            <div class="step-pic">
+              <img src="/webShop/image/step1.png" alt="">
+            </div>
+            <p class="step-title">第一步：注册账号</p>
+            <p class="step-cont-text">进入云仓官网，注册账号,注册完成后，填写相关信息</p>
+          </div>
+
+          <div class="mb-pre-process-con">
+            <div class="step-pic">
+              <img src="/webShop/image/step2.png" alt="">
+            </div>
+            <p class="step-title">第二步：填写信息</p>
+            <p class="step-cont-text">确认在线协议填写公司主体信息填写店铺信息提交相关资质</p>
+          </div>
+        </div>
+        <div class="mb-process">
+          <div class="mb-pre-process-con">
+            <div class="step-pic">
+              <img src="/webShop/image/step3.png" alt="">
+            </div>
+            <p class="step-title">第三步：等待审核</p>
+            <p class="step-cont-text">云仓工作人员会在1-3个工作日内反馈审核结果，商家可通过登录查询审核进度</p>
+          </div>
+          <div class="mb-pre-process-con">
+            <div class="step-pic">
+              <img src="/webShop/image/step4.png" alt="">
+            </div>
+            <p class="step-title">第四步：发布商品</p>
+            <p class="step-cont-text">审核通过，商家登录后台,商家发布商品并上架</p>
+          </div>
+        </div>
+        <div class="doc-bg-con">
+          <p class="doc-title doc-title-mst">入驻必备材料</p>
+          <ul class="doc-ul-list">
+            <li>营业执照电子版</li>
+            <li>法人证件电子版</li>
+          </ul>
+        </div>
+        <div class="doc-bg-con">
+          <p class="doc-title doc-title-no-mst">入驻选填材料</p>
+          <div class="doc-ul-list-spe">
+            <ul class="doc-ul-list">
+              <li>品牌LOGO</li>
+              <li>其他行业资质</li>
+            </ul>
+            <!--            <ul style="width:0.8rem;height: 100%;"></ul>-->
+            <ul class="doc-ul-list">
+              <li>品牌授权（代理品需提供）</li>
+              <li>店铺LOGO</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+      <!-- 这些品牌都已入住 -->
+      <div class="mb-brand-con">
+        <p class="mb-brand-title">这些品牌都已入驻</p>
+        <div class="mb-brand-con-bg" id="mb-brand-swiper">
+
+
+          <!-- <p class="mb-brand-type brand-swiper-pagination">
+            <span class="mb-clothes">服装服饰</span>
+            <span class="mb-electrical">家电</span>
+            <span class="mb-food">食品饮料</span>
+            <span class="mb-maternal">亲子母婴</span>
+          </p> -->
+          <div id="mb-brand-swiper-pagination"></div>
+          <div class="swiper-container">
+            <div class="swiper-wrapper mb-brand-con-swiper">
+              {{{range $k, $v := .logoUrlsJSON}}}
+              <div class="swiper-slide">
+                <div class="mb-img-con">
+                {{{range $key,$value := $v.logo_urls}}}
+                  {{{if gt (len $value.url) 0}}}
+                <img class="pre-image" src="{{{$value.url}}}"/>
+                  {{{end}}}
+                {{{end}}}
+                </div>
+              </div>
+              {{{end}}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 底部 -->
+      <div class="mb-footer mobile-content">
+        <div class="mb-about-list">
+          <ul>
+            <li>
+              <a href="http://{{{ .channelSite.mainDomain}}}/aboutus?1" target="_blank">企业简介</a>
+            </li>
+            <li>
+              <a href="http://{{{ .channelSite.mainDomain}}}/aboutus?2" target="_blank">发展历程</a>
+            </li>
+            <li>
+              <a href="http://{{{ .channelSite.mainDomain}}}/aboutus?3" target="_blank">荣誉资质</a>
+            </li>
+            <li>
+              <a href="http://{{{ .channelSite.mainDomain}}}/aboutus?4" target="_blank">团队介绍</a>
+            </li>
+            <li>
+              <a href="http://{{{ .channelSite.mainDomain}}}/aboutus?5" target="_blank">新闻动态</a>
+            </li>
+          </ul>
+          <div class="mb-about-us">
+            <p>联系电话：{{{.webSite.hotline_tel_1}}}</p>
+            <p>公司地址:{{{.webSite.company_address}}}</p>
+          </div>
+          <p class="mb-about-gs">
+            {{{.webSite.bottom_copyright}}}
+            <img class="icon-image" style="margin-right:4px;"src="/webShop/image/national.png">
+            <a href="https://beian.miit.gov.cn" target="_blank" style="color: #959BA8;"> {{{.webSite.record_num}}} </a>
+          </p>
+        </div>
+      </div>
+  </div>
+</div>
+</body>
+
+<script src="/webShop/js/jquery-2.2.4.min.js"></script>
+<script src="/webShop/css/swiper.min.js"></script>
+<script>
+    // 获取屏幕区域的宽度
+    let w = document.documentElement.clientWidth
+    if (w < 961) {
+      // 获取html根元素
+      let htmlNode = document.querySelector('html')
+      htmlNode.style.fontSize = w / 750 * 50 * 2 + 'px'
+    }
+  window.onload = function () {
+    let localUrl = window.location.host;
+    let ht = document.location.protocol;
+    /** 注册 */
+    $("#register").on('click',function () {
+      // 先调用 退出登陆接口，再执行下述操作
+      window.location.href = ht + '//' + '{{{ .channelSite.ssoDomain}}}' + '/login.html?redirect=' + ht + '//' + localUrl + '/platformlogin';
+    })
+    /** 登陆 */
+    $("#login").on('click',function () {
+      window.location.href = ht + '//' + '{{{ .channelSite.ssoDomain}}}' + '/login.html?redirect=' + ht + '//' + localUrl + '/platformlogin';
+    })
+    /** 注册 */
+    $("#mobileRegister").on('click',function () {
+      // 先调用 退出登陆接口，再执行下述操作
+      window.location.href = ht + '//' + '{{{ .channelSite.ssoDomain}}}' + '/login.html?redirect=' + ht + '//' + localUrl + '/platformlogin';
+    })
+    /** 登陆 */
+    $("#mobileLogin").on('click',function () {
+      window.location.href = ht + '//' + '{{{ .channelSite.ssoDomain}}}' + '/login.html?redirect=' + ht + '//' + localUrl + '/platformlogin';
+    })
+
+    /** 顶部nav 滚动背景 */
+    headerScroll()
+
+    $(window).scroll(function(){
+      headerScroll();
+    });
+
+    /** 交互效果 js */
+    /** nav 滚动效果 */
+    function headerScroll () {
+      let st = $(window).scrollTop();
+      if (st > 100) {
+        $('header').addClass('scroll-active')
+      } else if (st < 100) {
+        $('header').removeClass('scroll-active')
+      }
+    }
+
+    /** banner 轮播图 */
+      // 轮播图 基础配置
+    let swperOptions = {
+        loop: true, // 循环模式选项
+        autoplay: {
+          delay: 4000,
+          disableOnInteraction: false
+        },
+        // 设定初始化时slide的索引
+        initialSlide: 0,
+        // Slides的滑动方向，可设置水平(horizontal)或垂直(vertical)
+        direction: 'horizontal',
+        // 一个屏幕展示的数量
+        slidesPerView: 1,
+        observer: true,
+        observeParents: true,
+        pagination: {
+          el: '#banner-swiper-pagination',
+          bulletClass: 'hxz-bullet',
+          bulletActiveClass: 'hxz-bullet-active',
+          clickable :true,
+        },
+      }
+    let mySwiper = new Swiper('#banner-swiper', swperOptions);
+
+    /** 核心优势滑过动画 */
+    $(".pre-advantage").mouseenter(function() {
+      $(".advantage").addClass('mgB100');
+      $(".advantage-con").addClass('mgT20');
+      $(this).children('.dl-con').children("dt,dd").hide();
+      $(this).find(".pre-advantage-details").addClass('up-ad-details');
+    });
+    $(".pre-advantage").mouseleave(function() {
+      $(".advantage").removeClass('mgB100');
+      $(".advantage-con").removeClass('mgT20');
+      $(this).find(".pre-advantage-details").removeClass('up-ad-details');
+      $(this).children('.dl-con').children("dt,dd").show();
+    });
+
+    /** 入驻品牌 */
+    let brandSwiperOptions = {
+      watchSlidesProgress: true,
+      slidesPerView: 'auto',
+      centeredSlides: true,
+      observer:true,
+      loop: true,
+      initialSlide: 0,
+      autoplay: false,
+      navigation: {
+        nextEl: '#brand-swiper-button-next',
+        prevEl: '#brand-swiper-button-prev',
+      },
+      pagination: {
+        el: '#brand-swiper-pagination',
+        renderBullet: function (index, className) {
+          let text = '';
+          className = 'pre-title-span pre'
+          let type0 = ""
+          let type1 = ""
+          let type2 = ""
+          let type3 = ""
+          {{{range $k, $v := .logoUrlsJSON}}}
+          {{{ if eq $k 0 }}}
+          type0 = "{{{$v.type}}}"
+          {{{else if eq $k 1}}}
+          type1 = "{{{$v.type}}}"
+          {{{else if eq $k 2}}}
+          type2 = "{{{$v.type}}}"
+          {{{else if eq $k 3}}}
+          type3 = "{{{$v.type}}}"
+          {{{end}}}
+          {{{end}}}
+          switch(index) {
+            case 0: {
+              text = type0;
+              className = className + (index + 1)
+              break;
+            }
+            case 1: {
+              text = type1;
+              className = className + (index + 1)
+              break;
+            }
+            case 2: {
+              text = type2;
+              className = className + (index + 1)
+              break;
+            }
+            case 3: {
+              text = type3;
+              className = className + (index + 1)
+              break;
+            }
+
+          }
+
+          return '<span class="' + className + '">' + text + '</span>';
+        }
+      },
+      on: {
+        progress: function (progress) {
+          for (let i = 0; i < this.slides.length; i++) {
+            let slide = this.slides.eq(i);
+            let slideProgress = this.slides[i].progress;
+            let modify = 1;
+            if (Math.abs(slideProgress) > 1) {
+              modify = (Math.abs(slideProgress) - 1) * 0.3 + 1;
+            }
+            let translate = slideProgress * modify * 200 + 'px';
+            let scale = 1 - Math.abs(slideProgress) / 5;
+            let zIndex = 999 - Math.abs(Math.round(10 * slideProgress));
+            slide.transform('translateX(' + translate + ') scale(' + scale + ')');
+            slide.css('zIndex', zIndex);
+            slide.css('opacity', 1);
+            if (Math.abs(slideProgress) > 5) {
+              slide.css('opacity', 0);
+            }
+          }
+        },
+      }
+    }
+    let certifySwiper = new Swiper('#brand-swiper > .swiper-container', brandSwiperOptions)
+
+    /** 入驻品牌 分页器 点击效果 */
+    $('#brand-swiper-pagination > span').eq(0).addClass('active-custom-title')
+    $('#brand-swiper-pagination').on('click','span',function(){
+      let index = $(this).index();
+      $('#brand-swiper-pagination > span').removeClass('active-custom-title')
+      $(this).addClass('active-custom-title')
+      certifySwiper.slideTo(index+4, 1000, false)//切换到对应的slide，速度为1秒
+    });
+
+  } // window onload end
+  //移动端
+      /** banner 轮播图 */
+      // 轮播图 基础配置
+    let swperOptions = {
+        loop: true, // 循环模式选项
+        autoplay: {
+          delay: 4000,
+          disableOnInteraction: false
+        },
+        // 设定初始化时slide的索引
+        initialSlide: 0,
+        // Slides的滑动方向，可设置水平(horizontal)或垂直(vertical)
+        direction: 'horizontal',
+        // 一个屏幕展示的数量
+        slidesPerView: 1,
+        observer: true,
+        observeParents: true,
+        pagination: {
+          el: '#banner-swiper-pagination',
+          bulletClass: 'hxz-bullet',
+          bulletActiveClass: 'hxz-bullet-active',
+          clickable :true,
+        },
+      }
+    let mySwiper = new Swiper('#mb-banner-swiper', swperOptions);
+    //核心优势
+    let swperAd = {
+        loop: true, // 循环模式选项
+        autoplay: {
+          delay: 4000,
+          disableOnInteraction: false
+        },
+        // 设定初始化时slide的索引
+        initialSlide: 0,
+        // Slides的滑动方向，可设置水平(horizontal)或垂直(vertical)
+        direction: 'horizontal',
+        // 一个屏幕展示的数量
+        slidesPerView: 1,
+        observer: true,
+        observeParents: true,
+        //分页器
+        // pagination: {
+        //   el: '#banner-swiper-pagination',
+        //   bulletClass: 'hxz-bullet',
+        //   bulletActiveClass: 'hxz-bullet-active',
+        //   clickable :true,
+        // },
+      }
+    let myAd = new Swiper('#mb-ad-swiper', swperAd);
+
+    // 轮播图 基础配置
+    // let footerswiper = {
+    //     loop: true, // 循环模式选项
+    //     autoplay: {
+    //       delay: 4000,
+    //       disableOnInteraction: false
+    //     },
+    //     // 设定初始化时slide的索引
+    //     initialSlide: 0,
+    //     // Slides的滑动方向，可设置水平(horizontal)或垂直(vertical)
+    //     direction: 'horizontal',
+    //     // 一个屏幕展示的数量
+    //     slidesPerView: 1,
+    //     observer: true,
+    //     observeParents: true,
+    //     pagination: {
+    //       el: '#banner-swiper-pagination',
+    //       bulletClass: 'hxz-bullet',
+    //       bulletActiveClass: 'hxz-bullet-active',
+    //       clickable :true,
+    //     },
+    //   }
+    // let footSwiper = new Swiper('.mb-brand-con-bg', footerswiper);
+        /** 入驻品牌 */
+        let mbbrandSwiperOptions = {
+      watchSlidesProgress: true,
+      slidesPerView: 'auto',
+      centeredSlides: true,
+      observer:true,
+      loop: true,
+      initialSlide: 0,
+      autoplay: false,
+      navigation: {
+        nextEl: '#brand-swiper-button-next',
+        prevEl: '#brand-swiper-button-prev',
+      },
+      pagination: {
+        el: '#mb-brand-swiper-pagination',
+        renderBullet: function (index, className) {
+          let text = '';
+          className = 'pre-title-span pre'
+
+          let type0 = ""
+          let type1 = ""
+          let type2 = ""
+          let type3 = ""
+          {{{range $k, $v := .logoUrlsJSON}}}
+          {{{ if eq $k 0 }}}
+          type0 = "{{{$v.type}}}"
+          {{{else if eq $k 1}}}
+          type1 = "{{{$v.type}}}"
+          {{{else if eq $k 2}}}
+          type2 = "{{{$v.type}}}"
+          {{{else if eq $k 3}}}
+          type3 = "{{{$v.type}}}"
+          {{{end}}}
+          {{{end}}}
+          switch(index) {
+            case 0: {
+              text = type0;
+              className = className + (index + 1)
+              break;
+            }
+            case 1: {
+              text = type1;
+              className = className + (index + 1)
+              break;
+            }
+            case 2: {
+              text = type2;
+              className = className + (index + 1)
+              break;
+            }
+            case 3: {
+              text = type3;
+              className = className + (index + 1)
+              break;
+            }
+
+          }
+
+
+          return '<span class="' + className + '">' + text + '</span>';
+        }
+      },
+      on: {
+        progress: function (progress) {
+          for (let i = 0; i < this.slides.length; i++) {
+            let slide = this.slides.eq(i);
+            let slideProgress = this.slides[i].progress;
+            let modify = 1;
+            if (Math.abs(slideProgress) > 1) {
+              modify = (Math.abs(slideProgress) - 1) * 0.3 + 1;
+            }
+            let translate = slideProgress * modify * 200 + 'px';
+            let scale = 1 - Math.abs(slideProgress) / 5;
+            let zIndex = 999 - Math.abs(Math.round(10 * slideProgress));
+            slide.transform('translateX(' + translate + ') scale(' + scale + ')');
+            slide.css('zIndex', zIndex);
+            slide.css('opacity', 1);
+            if (Math.abs(slideProgress) > 5) {
+              slide.css('opacity', 0);
+            }
+          }
+        },
+      }
+    }
+    let certifySwiper = new Swiper('#mb-brand-swiper > .swiper-container', mbbrandSwiperOptions)
+
+    /** 入驻品牌 分页器 点击效果 */
+    $('#mb-brand-swiper-pagination > span').eq(0).addClass('active-custom-title')
+    $('#mb-brand-swiper-pagination').on('click','span',function(){
+      let index = $(this).index();
+      $('#mb-brand-swiper-pagination > span').removeClass('active-custom-title')
+      $(this).addClass('active-custom-title')
+      certifySwiper.slideTo(index+4, 1000, false)//切换到对应的slide，速度为1秒
+    });
+    //顶部导航
+    $('.mb-menu-icon-con').on('click',function(){
+      $('.yinchang').addClass('active')
+      $('.yinchang').removeClass('non')
+      $('.mb-menu-icon-con').addClass('non')
+    })
+    $('.yinchang').on('click',function(){
+      $('.yinchang').addClass('non')
+      $('.yinchang').removeClass('active')
+      $('.mb-menu-icon-con').removeClass('non')
+    })
+    $('.mb-menu-list-top').on('click',function(){
+      $('.yinchang').addClass('non')
+      $('.yinchang').removeClass('active')
+      $('.mb-menu-icon-con').removeClass('non')
+    })
+</script>
+</html>

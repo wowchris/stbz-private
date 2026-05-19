@@ -1,0 +1,192 @@
+<!-- banner -->
+<div id="mb-banner-swiper" class="swiper-container">
+    <div class="swiper-wrapper">
+        {{{range $key, $value := .channelSiteBanner}}}
+        {{{ if gt ($value.img_url|len) 0 }}}
+        {{{ if eq $value.redirect_url "" }}}
+        <div class="swiper-slide">
+            <a class="mb-ban-swiper-a" href="javascript:void(0);">
+                <img class="mb-ban-swiper-img" src="{{{$value.img_url}}}" alt="">
+            </a>
+        </div>
+        {{{ else }}}
+        <div class="swiper-slide">
+            <a class="mb-ban-swiper-a" href="{{{$value.redirect_url}}}" target="_blank">
+                <img class="mb-ban-swiper-img" src="{{{$value.img_url}}}" alt="">
+            </a>
+        </div>
+        {{{end}}}
+        {{{end}}}
+        {{{end}}}
+    </div>
+</div>
+<!-- 产品与服务 -->
+<div class="mb-product-service">
+    <p class="mb-pros-title">产品与服务</p>
+    <div id="mb-product-swiper" class="swiper-container">
+        <div class="swiper-wrapper">
+            {{{range $key, $value := .officialProductlst}}}
+            <div class="swiper-slide">
+                <div class="mb-ps-slide-con">
+                    <img class="mb-pss-img" src="{{{$value.img_url}}}" alt="">
+                    <p class="mb-pss-title">
+                        {{{$value.title}}}
+                        <span class="mb-pss-title-spot"></span>
+                    </p>
+                    <p class="mb-pss-desc">
+                        {{{$value.content_summary}}}
+                    </p>
+                </div>
+            </div>
+            {{{end}}}
+        </div>
+    </div>
+    <div class="mb-custom-ps-pagination">
+        <div class="swiper-pagination"></div>
+    </div>
+</div>
+<!-- 一站式 解决方案 -->
+<div class="mb-platform-solution">
+    <p class="mb-ps-title">电商平台一站式解决方案专家</p>
+    <p class="mb-ps-subtitle">
+        <span>商品供应链</span>
+        <span>云仓服务商</span>
+    </p>
+    <div class="mb-ps-desc">
+        <h4 class="mb-ps-desc-title">解决方案</h4>
+        <p class="mb-ps-desc-text">
+            胜天半子提供从产品供应链、仓储物流、技术研发到 创新营销策略的一站式解决方案！技术研发到创新营销策略的一站式解决方案方方胜天半子
+            提供从产品供 应链、仓储物流、技术研发到创新营销策略的一站式 解决方案!
+        </p>
+        <div class="mb-ps-desc-img">
+            <div class="mb-sl-bg-pre">
+                <img class="mb-sl-bg-img1" src="/web/image/mb-api1.png" alt="">
+                <p class="mb-sl-bg-title">API加入</p>
+            </div>
+            <div class="mb-sl-bg-arrow"></div>
+            <div class="mb-sl-bg-pre">
+                <img class="mb-sl-bg-img2" src="/web/image/mb-api2.png" alt="">
+                <p class="mb-sl-bg-title">平台背书</p>
+            </div>
+            <div class="mb-sl-bg-arrow"></div>
+            <div class="mb-sl-bg-pre">
+                <img class="mb-sl-bg-img3" src="/web/image/mb-api3.png" alt="">
+                <p class="mb-sl-bg-title">自动发货</p>
+            </div>
+            <div class="mb-sl-bg-arrow"></div>
+            <div class="mb-sl-bg-pre">
+                <img class="mb-sl-bg-img4" src="/web/image/mb-api4.png" alt="">
+                <p class="mb-sl-bg-title">客户服务</p>
+            </div>
+        </div>
+    </div>
+    <div class="mb-ps-desc">
+        <h4 class="mb-ps-desc-title">解决方案</h4>
+        <p class="mb-ps-desc-text">
+            云仓一款专注于电商平台解决方案的ERP管理系统。供应商入驻云仓，可以搭建从前端到后台的管理系统，玩转私域流量，也可以同时管理多网店
+            的订单、商品等，一站式的解决方案，完美匹配您的需求。
+        </p>
+    </div>
+</div>
+<!-- 新闻动态 -->
+<div class="mb-news">
+    <p class="mb-news-all-title">新闻动态</p>
+    <ul class="mb-news-list">
+        {{{range $key, $value := .new}}}
+        <li>
+            <a class="mb-news-title" href="./news?id={{{$value.id}}}" target="_blank">{{{$value.title}}}</a>
+            <span class="mb-news-day">{{{ $value.create_time | date "Y-m-d" }}}</span>
+        </li>
+        {{{end}}}
+    </ul>
+</div>
+<!-- advantage -->
+<div class="mb-advantage">
+    {{{range $k,$v :=  .profile_image_url}}}
+    <div class="mb-ad-con">
+        <img class="mb-ad-img" src="{{{$v}}}" alt="">
+    </div>
+    {{{end}}}
+
+<!--    <div class="mb-ad-con">-->
+<!--        <div class="mb-ad-title-con">-->
+<!--            <p class="mb-ad-title">优质货源</p>-->
+<!--            <p class="mb-ad-num">200W+</p>-->
+<!--        </div>-->
+<!--        <img class="mb-ad-img" src="/web/image/mb-ad1.png" alt="">-->
+<!--    </div>-->
+</div>
+<!-- supplier -->
+<div class="mb-supplier">
+    <p class="mb-sup-title">30000+供应商选择加入</p>
+    <div class="mb-sup-con">
+        {{{range $key, $value := .logoUrlsJSON}}}
+            {{{range $k, $v := $value}}}
+        <img class="mb-sup-img" src="{{{$v.url}}}" alt="">
+            {{{end}}}
+        {{{end}}}
+    </div>
+</div>
+<!-- cooperation -->
+<div class="mb-cooperation">
+    <p class="mb-coo-text">马上开启自己的业务</p>
+    <div class="mb-coo-btn" id="toCooperation">我要合作</div>
+</div>
+<!-- 我要合作 PC 弹窗 -->
+<div class="to-coo-dialog">
+    <div class="tc-main-con">
+        <div class="tc-main">
+            <p class="tc-title">
+                互动留言
+                <span class="tc-close-x" id="close-coo-x">╳</span>
+            </p>
+            <div class="tc-con">
+                <div class="tc-con-pre">
+                    <p class="tcp-title">合作类型：</p>
+                    <p class="tcp-radio-con-main">
+                        <span class="radio-con">
+                            <input type="radio" name="coo-type" value="1" id="channel" class="coo-input-radio"/>
+                            <label for="channel">渠道分销</label>
+                        </span>
+                        <span class="radio-con">
+                            <input type="radio" name="coo-type" value="2" id="supplier" class="coo-input-radio"/>
+                            <label for="supplier">供应商合作</label>
+                        </span>
+                        <span class="radio-con">
+                            <input type="radio" name="coo-type" value="3" id="partner" class="coo-input-radio"/>
+                            <label for="partner">合伙人计划</label>
+                        </span>
+                        <span class="radio-con">
+                            <input type="radio" name="coo-type" value="4" id="others" class="coo-input-radio"/>
+                            <label for="others">其他</label>
+                        </span>
+                    </p>
+                </div>
+                <div class="tc-con-pre">
+                    <p class="tcp-title">合作意向：</p>
+                    <textarea id="intention" rows="4" maxlength="500" class="tcp-text-area"></textarea>
+                </div>
+                <div class="tc-con-pre">
+                    <p class="tcp-title">企业名称：</p>
+                    <p id="companyName" contenteditable="true" class="tcp-text"></p>
+                </div>
+                <div class="tc-con-pre">
+                    <p class="tcp-title">姓名：</p>
+                    <p id="name" contenteditable="true" class="tcp-text"></p>
+                </div>
+                <div class="tc-con-pre">
+                    <p class="tcp-title">手机号：</p>
+                    <p id="mobile" contenteditable="true" class="tcp-text"></p>
+                </div>
+                <div class="tc-con-pre">
+                    <p class="tcp-title">电子邮箱：</p>
+                    <p id="email" contenteditable="true" class="tcp-text"></p>
+                </div>
+            </div>
+            <div class="tc-btn-con">
+                <span class="tc-cancel" id="coo-cancel">取消</span>
+                <span class="tc-submit" id="coo-submit">提交</span>
+            </div>
+        </div>
+    </div>
+</div>

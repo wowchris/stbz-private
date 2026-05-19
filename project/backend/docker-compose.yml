@@ -1,0 +1,42 @@
+version: '3'
+services:
+  private:
+    image: golang
+    user: root
+    container_name: private_server
+    network_mode: bridge
+    environment:
+      - TZ=Asia/Shanghai
+    restart: always
+    ports:
+      - "8199:8199"
+    volumes:
+      - ./:/go/private_server
+    working_dir: /go/private_server
+    entrypoint: ./main server
+
+  private_script:
+    image: golang
+    container_name: private_script
+    network_mode: bridge
+    environment:
+      - TZ=Asia/Shanghai
+    restart: always
+    volumes:
+      - ./:/go/private_script
+    working_dir: /go/private_script
+    entrypoint: ./main script
+
+  private_message:
+    image: golang
+    container_name: private_message
+    network_mode: bridge
+    environment:
+      - TZ=Asia/Shanghai
+    restart: always
+    volumes:
+      - ./:/go/private_message
+    working_dir: /go/private_message
+    entrypoint: ./main message
+
+

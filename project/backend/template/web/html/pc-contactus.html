@@ -1,0 +1,24 @@
+<div class="cu-con">
+    <div class="cu-phone-con cu-click" id="cuPhoneCon">
+        <img class="cu-phone-img" src="/web/image/fixed-phone.png" alt="电话联系">
+        <p class="cu-phone-text">电话</p>
+
+        <!-- 电话 滑过 -->
+        <div id="cuPhoneConHover" class="cu-phone-con-hover cu-click-toggle">
+            <p class="cup-hover-phone">咨询热线</p>
+            <p class="spe-color">{{{.webSite.hotline_tel_1}}}</p>
+            <p class="spe-color">{{{.webSite.hotline_tel_2}}}</p>
+            <p class="cup-hover-time">工作时间</p>
+            <p>{{{.webSite.business_hours}}} {{{.webSite.online_time_start}}}-{{{.webSite.online_time_end}}}</p>
+        </div>
+    </div>
+    <div class="cu-wechat-con cu-click" id="cuWechatCon">
+        <img class="cu-wechat-img" src="/web/image/fixed-msg.png" alt="微信咨询">
+        <p class="cu-wechat-text">微信</p>
+
+        <!-- 微信 滑过 -->
+        <div id="cuWechatConHover" class="cu-wechat-con-hover cu-click-toggle">
+            <img class="cuwc-hover-img" src="{{{.webSite.cust_service_qrcode}}}" alt="">
+        </div>
+    </div>
+</div>

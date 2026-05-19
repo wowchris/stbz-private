@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="{{{.channelSite.keywords}}}">
+  <meta name="description" content="{{{.channelSite.describe}}}">
+  <title>{{{.channelSite.title}}}</title>
+  <link href="/webOpen/css/swiper.min.css" rel="stylesheet">
+  <link href="/webOpen/css/mobile.css" rel="stylesheet">
+  <style>
+    /* 取消a标签默认样式 */
+    a {
+      text-decoration: none;
+      color: #fff;
+    }
+    /*正常的未被访问过的链接*/
+    a:link {
+      text-decoration: none;
+      color: #fff;
+    }
+    /*已经访问过的链接*/
+    a:visited {
+      text-decoration: none;
+      color: #fff;
+    }
+    /*鼠标划过(停留)的链接*/
+    a:hover {
+      text-decoration: none;
+      color: #fff;
+    }
+    /* 正在点击的链接*/
+    a:active {
+      text-decoration: none;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <!-- 侧边导航 -->
+  <div class="navigation">
+    <img class="logo" src="{{{.webSite.toplogo}}}" alt="">
+    <img class="nav-icon" src="/webOpen/image/more2.png" alt="">
+    <div class="nav-list isShow">
+      <ul>
+        <li><a href="http://{{{ .channelSite.mainDomain}}}">首页</a></li>
+        <li><a href="">开放平台</a></li>
+        <li><a href="http://{{{ .channelSite.sjDomain}}}">云仓</a></li>
+        <li><a href="http://{{{ .channelSite.mainDomain}}}/aboutus?1">关于我们</a></li>
+        <li><a id="mobileRegister" href="javascript:void(0);">登录</a></li>
+        <li><a id="mobileLoginBtn" href="javascript:void(0);">注册</a></li>
+      </ul>
+    </div>
+  </div>
+  <!-- 轮播图 -->
+  <div class="swiper banner-swiper">
+    <div class="swiper-wrapper">
+      {{{range $key, $value := .open_banner_lst}}}
+      {{{ if gt ($value.img_url|len) 0 }}}
+      <div class="swiper-slide">
+        {{{ if eq $value.redirect_url "" }}}
+        <img class="banner" src="{{{$value.img_url}}}" alt="">
+        {{{ else }}}
+        <a href="{{{$value.redirect_url}}}" target="_blank" >
+          <img class="banner" src="{{{$value.img_url}}}" alt="">
+        </a>
+        {{{end}}}
+      </div>
+      {{{end}}}
+      {{{end}}}
+    </div>
+    <div class="swiper-pagination"></div>  
+  </div>
+
+  <!-- 产品服务 -->
+  <div class="productService">
+    <div class="productService-title">产品服务</div>
+    <div class="swiper productService-swiper">
+      <div class="swiper-wrapper">
+        {{{range $key, $value := .open_product_lst}}}
+        <div class="swiper-slide">
+          <div class="contentHeight">
+            <div class="contentBg">
+              <img class="icon" src="{{{$value.img_url}}}" alt="">
+              <h3>{{{$value.title}}}</h3>
+              <div class="line"></div>
+              <p class="desc">{{{$value.content_summary}}}</p>
+            </div>
+          </div>
+        </div>
+        {{{end}}}
+      </div>
+      <div class="swiper-pagination"></div>  
+    </div>
+  </div>
+
+  <!-- 核心优势 -->
+  <div class="core">
+    <div class="core-title">核心优势</div>
+    <div class="swiper core-swiper">
+      <div class="swiper-wrapper">
+        {{{range $k, $v := .open_advantage_lst}}}
+        <div class="swiper-slide">
+          <div class="content-bg bg1">
+            <div class="content">
+              <img class="content-icon" src="{{{$v.img_url}}}" alt="">
+              <h4>{{{$v.title}}}</h4>
+              <div class="line"></div>
+              <div class="desc">{{{$v.content}}}</div>
+            </div>
+          </div>
+        </div>
+        {{{end}}}
+      </div>
+      <div class="swiper-pagination"></div>  
+    </div>
+  </div>
+  <!-- 全品类商品 -->
+  <div class="goods-box">
+    <div class="title-box">
+      <h1 class="title">全品类百万余款商品任你选</h1>
+    </div>
+    <div class="swiper-container goods-swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img class="" src="/webOpen/image/icon1.png" alt="">
+          <div>母婴亲子</div>
+        </div>
+        <div class="swiper-slide">
+          <img class="" src="/webOpen/image/icon3.png" alt="">
+          <div>食品饮料</div>
+        </div>
+        <div class="swiper-slide">
+          <img class="" src="/webOpen/image/icon5.png" alt="">
+          <div>美妆个护</div>
+        </div>
+        <div class="swiper-slide">
+          <img class="" src="/webOpen/image/icon7.png" alt="">
+          <div>箱包皮具</div>
+        </div>
+        <div class="swiper-slide">
+          <img class="" src="/webOpen/image/icon9.png" alt="">
+          <div>家居日用</div>
+        </div>
+        <div class="swiper-slide">
+          <img class="" src="/webOpen/image/icon2.png" alt="">
+          <div>电脑办公</div>
+        </div>
+        <div class="swiper-slide">
+          <img class="" src="/webOpen/image/icon4.png" alt="">
+          <div>数码电子</div>
+        </div>
+        <div class="swiper-slide">
+          <img class="" src="/webOpen/image/icon6.png" alt="">
+          <div>服装配饰</div>
+        </div>
+        <div class="swiper-slide">
+          <img class="" src="/webOpen/image/icon8.png" alt="">
+          <div>宠物用品</div>
+        </div>
+        <div class="swiper-slide">
+          <img class="" src="/webOpen/image/icon10.png" alt="">
+          <div>餐厨器具</div>
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+  <!-- 变现 -->
+  <div class="logo-box">
+    <div class="title-box">
+      <h1 class="title">他们正在变现，期待你的加入</h1>
+    </div>
+    <div class="card">
+      <ul class="card-list">
+        {{{range $k, $v := .logoUrlsJSON}}}
+        {{{if lt $k 12 }}}
+        <li class="card-item"><img src="{{{$v.url}}}" alt=""></li>
+        {{{end}}}
+        {{{end}}}
+      </ul>
+    </div>
+  </div>
+  <!-- 即刻开始 -->
+  <div class="start-box">
+    <div class="title-box">
+      <h1 class="title" style="color: #fff;">简单几步，即刻开始</h1>
+    </div>
+    <div class="step">
+      <div class="line"></div>
+      <ul class="step-list">
+        <li class="step-item">
+          <img src="/webOpen/image/register.png" alt="">
+          <div class="title">注册认证</div>
+        </li>
+        <li class="step-item">
+          <img src="/webOpen/image/experience.png" alt="">
+          <div class="title">下单体验</div>
+        </li>
+        <li class="step-item">
+          <img src="/webOpen/image/dasboard.png" alt="">
+          <div class="title">开发测试</div>
+        </li>
+        <li class="step-item">
+          <img src="/webOpen/image/online.png" alt="">
+          <div class="title">部署上线</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- 底部 -->
+  <footer>
+    <div class="footer-box">
+      <div class="footer-tab">
+<!--        <ul class="tablist">-->
+<!--          <li class="tabitem">企业简介</li>-->
+<!--          <li class="tabitem">发展历程</li>-->
+<!--          <li class="tabitem">团队介绍</li>-->
+<!--          <li class="tabitem">新闻动态</li>-->
+<!--          <li class="tabitem">荣誉资质</li>-->
+<!--        </ul>-->
+      </div>
+      <div class="phone">联系电话：{{{.webSite.hotline_tel_1}}}<span style="margin-left: .2rem;">{{{.webSite.hotline_tel_2}}}</span></div>
+      <div class="address">公司地址:{{{.webSite.company_address}}}</div>
+      <div class="copyright"> {{{.webSite.bottom_copyright}}} <img src="/webOpen/image/national.png" alt="" style="height: .2rem;">   <a href="https://beian.miit.gov.cn" target="_blank" style="color: #959BA8;"> {{{.webSite.record_num}}} </a></div>
+    </div>
+  </footer>
+  <!-- 侧边 -->
+  <div class="fixed-container">
+    <div class="fixed-item1">
+      <img class="item-icon" src="/webOpen/image/fixed-phone.png" alt="">
+      <span>电话</span>
+      <div class="card-tel">
+        <div class="tel-box">
+          <img src="/webOpen/image/phone3.png" alt="">
+          <div>
+            <div>咨询热线</div>
+            <p class="tel-style">{{{.webSite.hotline_tel_1}}}</p>
+            <p class="tel-style">{{{.webSite.hotline_tel_2}}}</p>
+          </div>
+        </div>
+        <div class="tel-box">
+          <img src="/webOpen/image/time.png" alt="">
+          <div>
+            <div>工作时间</div>
+            <p>{{{.webSite.business_hours}}} <span class="time">{{{.webSite.online_time_start}}}-{{{.webSite.online_time_end}}}</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fixed-item2">
+      <img class="item-icon" src="/webOpen/image/fixed-wx.png" alt="">
+      <span>微信</span>
+      <div class="code">
+        <img src="{{{.webSite.cust_service_qrcode}}}" alt="">
+      </div>
+    </div>
+  </div>
+  <script src="/webOpen/js/swiper-bundle.min.js"></script>
+  <script>
+    window.onload = function () {
+      (function () {
+        let w = document.documentElement.clientWidth;
+        let htmlNode = document.querySelector('html');
+        if (w >= 750) {
+          htmlNode.style.fontSize = 16 + 'px';
+          window.location.href = 'main';
+        } else {
+          htmlNode.style.fontSize = (w / 750) * 100 + 'px';
+        }
+      })();
+
+      let localUrl = window.location.host;
+      let ht = document.location.protocol;
+      /** 注册 */
+      $("#mobileRegister").on('click',function () {
+        // 先调用 退出登陆接口，再执行下述操作
+        window.location.href = ht + '//' + '{{{ .channelSite.ssoDomain}}}' + '/login.html?redirect=' + ht + '//' + localUrl + '/loginticket';
+      })
+      /** 登陆 */
+      $("#mobileLoginBtn").on('click',function () {
+        window.location.href = ht + '//' + '{{{ .channelSite.ssoDomain}}}' + '/login.html?redirect=' + ht + '//' + localUrl + '/loginticket';
+      })
+      new Swiper ('.banner-swiper', {
+        loop: true,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      });  
+
+      new Swiper('.productService-swiper', {
+        slidesPerView : 'auto',
+        spaceBetween: 10,
+        slidesOffsetBefore: 10,
+        slidesOffsetAfter: 10
+      });
+
+      new Swiper('.core-swiper', {
+        slidesPerView : 'auto',
+        spaceBetween: 10,
+        slidesOffsetBefore: 10,
+        slidesOffsetAfter: 10
+      });
+      
+      new Swiper('.goods-swiper', {
+        autoplay: true,
+        pagination: '.swiper-pagination',
+        slidesPerView: 3,
+        slidesPerColumn: 2,
+        paginationClickable: true,
+        spaceBetween: 1,
+        grid: {
+          fill: 'row',
+          rows: 2
+        },
+      });
+
+      let item1 = document.querySelector('.nav-icon');
+      item1.onmouseover = function() {
+        document.querySelector('.isShow').style.opacity = 1;
+      }
+      item1.onmouseout = function() {
+        document.querySelector('.isShow').style.opacity = 0;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!-- banner 轮播图 -->
+<div class="swiper-container" id="banner-swiper">
+    <div class="swiper-wrapper">
+        {{{range $key, $value := .channelSiteBanner}}}
+        {{{ if gt ($value.img_url|len) 0 }}}
+            {{{ if eq $value.redirect_url "" }}}
+        <div class="swiper-slide">
+            <a href="javascript:void(0);">
+                <img class="ban-swiper-img" src="{{{$value.img_url}}}" alt="">
+            </a>
+        </div>
+            {{{ else }}}
+            <div class="swiper-slide">
+                <a href="{{{$value.redirect_url}}}" target="_blank">
+                    <img class="ban-swiper-img" src="{{{$value.img_url}}}" alt="">
+                </a>
+            </div>
+            {{{end}}}
+        {{{end}}}
+        {{{end}}}
+    </div>
+</div>
+<!-- banner底部悬浮数据dom -->
+<div class="case-statistics-main">
+    <div class="pre-case-con">
+        <p class="case-p">
+            <span class="case-num">200</span>
+            <span class="case-unit">万+</span>
+        </p>
+        <p class="case-desc">优质货源</p>
+    </div>
+    <div class="pre-case-con">
+        <p class="case-p">
+            <span class="case-num">1</span>
+            <span class="case-unit">万+</span>
+        </p>
+        <p class="case-desc">行业覆盖</p>
+    </div>
+    <div class="pre-case-con">
+        <p class="case-p">
+            <span class="case-num">500</span>
+            <span class="case-unit">+</span>
+        </p>
+        <p class="case-desc">城市布局</p>
+    </div>
+    <div class="pre-case-con">
+        <p class="case-p">
+            <span class="case-num">1,000</span>
+            <span class="case-unit">+</span>
+        </p>
+        <p class="case-desc">合作案例</p>
+    </div>
+</div>
+<!-- 系统公告 -->
+<div class="sys-notice-main">
+    <p class="notice-p">系统公告：</p>
+    <div class="swiper-container sys-notice-swiper">
+        <div class="swiper-wrapper">
+            {{{range $key, $value := .system}}}
+            <div class="swiper-slide">
+                <a href="./news?id={{{$value.id}}}" target="_blank">{{{$value.title}}}</a>
+            </div>
+            {{{end}}}
+        </div>
+    </div>
+</div>
+<!-- 产品服务 -->
+<div class="product-service-main">
+    <p class="ps-first-title">产品服务</p>
+    <div class="ps-con">
+        {{{range $key, $value := .officialProductlst}}}
+        <div class="pre-ps">
+            <img class="ps-img" src="{{{$value.img_url}}}" alt="">
+            <p class="ps-title">{{{$value.title}}}</p>
+            <p class="ps-desc">{{{$value.content_summary}}}</p>
+            <a target="_blank" href="{{{$value.redirect_url}}}" >
+                <div class="ps-btn">立即开始</div>
+            </a>
+        </div>
+        {{{end}}}
+
+    </div>
+</div>
+<!-- 解决方案 -->
+<div class="platform-solution-main">
+    <div class="pfs-con">
+        <p class="pfs-title">电商平台一站式解决方案专家</p>
+        <div class="pfs-main">
+            <div class="pfs-main-title">
+                <p>
+                    商品供应链
+                    <span class="pfs-tip-bg"></span>
+                </p>
+                <p>
+                    云仓
+                    <span class="pfs-tip-bg"></span>
+                </p>
+            </div>
+            <div class="pfs-main-desc">
+                <div class="single-pfs-desc">
+                    <p class="pfs-desc-title">解决方案</p>
+                    <p class="pfs-desc-text">整合供应链为基础，将大平台商品聚合，构建一个企业级客户的供应链服务平台；通过API、H5、团购、集采、一件代发等方式，
+                        帮助企业客户实现一站式的平台化和数字化采购，降低采购成本，提升采购效率。
+                    </p>
+                    <div class="solution-bg-main">
+                        <div class="sl-bg-pre">
+                            <img class="sl-bg-img1" src="/web/image/api1.png" alt="">
+                            <p class="sl-bg-title">API加入</p>
+                        </div>
+                        <div class="sl-bg-arrow"></div>
+                        <div class="sl-bg-pre">
+                            <img class="sl-bg-img2" src="/web/image/api2.png" alt="">
+                            <p class="sl-bg-title">平台背书</p>
+                        </div>
+                        <div class="sl-bg-arrow"></div>
+                        <div class="sl-bg-pre">
+                            <img class="sl-bg-img3" src="/web/image/api3.png" alt="">
+                            <p class="sl-bg-title">自动发货</p>
+                        </div>
+                        <div class="sl-bg-arrow"></div>
+                        <div class="sl-bg-pre">
+                            <img class="sl-bg-img4" src="/web/image/api4.png" alt="">
+                            <p class="sl-bg-title">客户服务</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="single-pfs-desc">
+                    <p class="pfs-desc-title">解决方案</p>
+                    <p class="pfs-desc-text">云仓一款专注于电商平台解决方案的ERP管理系统。供应商入驻云仓，可以搭建从前端到后台的管理系统，玩转私域流量，
+                        也可以同时管理多网店的订单、商品等，一站式的解决方案，完美匹配您的需求。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 新闻动态 -->
+<div class="new-main">
+    <p class="new-title">资讯公告</p>
+    <div class="new-con">
+        <div class="top-new-con">
+            <img class="top-new-con-img" src="/web/image/top-new-bg.png" alt="">
+                {{{range $key, $value := .new}}}
+                {{{ if eq $key 0 }}}
+                <a target="_blank" href="./news?id={{{$value.id}}}" >
+                    <div class="new-pre-con custom-new-con">
+                        <div class="new-time-con">
+                            <p class="new-time-year">{{{$value.create_time | date "Y"}}}</p>
+                            <p class="new-time-month">{{{$value.create_time | date "m-d"}}}</p>
+                        </div>
+                        <div class="new-single-desc">
+                            <p class="new-single-title">{{{$value.title}}}</p>
+                            <p class="new-single-text">
+                                {{{$value.abstract}}}
+                            </p>
+                        </div>
+                    </div></a>
+                {{{end}}}
+                {{{end}}}
+        </div>
+        <div class="new-reset-con">
+            {{{range $key, $value := .new}}}
+            {{{ if gt $key 0 }}}
+            <a target="_blank" href="./news?id={{{$value.id}}}" >
+            <div class="new-pre-con custom-new-con">
+                <div class="new-time-con">
+                    <p class="new-time-year">{{{$value.create_time | date "Y"}}}</p>
+                    <p class="new-time-month">{{{$value.create_time | date "m-d"}}}</p>
+                </div>
+                <div class="new-single-desc">
+                    <p class="new-single-title">{{{$value.title}}}</p>
+                    <p class="new-single-text">
+                        {{{$value.abstract}}}
+                    </p>
+                </div>
+            </div></a>
+            {{{end}}}
+            {{{end}}}
+        </div>
+    </div>
+</div>
+<!-- middle-banner -->
+<div class="middle-banner-main"></div>
+<!-- 供应商logo -->
+<div class="supplier-logo-main">
+    <p class="sl-title">
+        <span class="sl-title-spe-span">30000+</span>
+        <span>供应商选择加入</span>
+    </p>
+    {{{range $key, $value := .logoUrlsJSON}}}
+    <div class="sl-con">
+        {{{range $k, $v := $value}}}
+        <div class="sl-img-pre-con">
+            <img class="sl-img-pre" src="{{{$v.url}}}" alt="">
+        </div>
+        {{{end}}}
+    </div>
+    {{{end}}}
+</div>
+<!-- cooperation -->
+<div class="coo-main">
+    <p class="coo-title">马上开启自己的业务</p>
+    <div class="coo-btn" id="toCooperation">我要合作</div>
+</div>
+<!-- 我要合作 PC 弹窗 -->
+<div class="to-coo-dialog">
+    <div class="tc-main-con">
+        <div class="tc-main">
+            <p class="tc-title">
+                互动留言
+                <span class="tc-close-x" id="close-coo-x">╳</span>
+            </p>
+            <div class="tc-con">
+                <div class="tc-con-pre">
+                    <p class="tcp-title">合作类型：</p>
+                    <p>
+                        <span class="radio-con">
+                            <input type="radio" name="coo-type" value="1" id="channel" class="coo-input-radio"/>
+                            <label for="channel">渠道分销</label>
+                        </span>
+                        <span class="radio-con">
+                            <input type="radio" name="coo-type" value="2" id="supplier" class="coo-input-radio" />
+                            <label for="supplier">供应商合作</label>
+                        </span>
+                        <span class="radio-con">
+                            <input type="radio" name="coo-type" value="3" id="partner" class="coo-input-radio"/>
+                            <label for="partner">合伙人计划</label>
+                        </span>
+                        <span class="radio-con">
+                            <input type="radio" name="coo-type" value="4" id="others" class="coo-input-radio"/>
+                            <label for="others">其他</label>
+                        </span>
+                    </p>
+                </div>
+                <div class="tc-con-pre">
+                    <p class="tcp-title">合作意向：</p>
+                    <textarea id="intention" rows="4" maxlength="500" class="tcp-text-area"></textarea>
+                </div>
+                <div class="tc-con-pre">
+                    <p class="tcp-title">企业名称：</p>
+                    <p id="companyName" contenteditable="true"  class="tcp-text"></p>
+                </div>
+                <div class="tc-con-pre">
+                    <p class="tcp-title">姓名：</p>
+                    <p id="name" contenteditable="true" class="tcp-text"></p>
+                </div>
+                <div class="tc-con-pre">
+                    <p class="tcp-title">手机号：</p>
+                    <p id="mobile" contenteditable="true" class="tcp-text"></p>
+                </div>
+                <div class="tc-con-pre">
+                    <p class="tcp-title">电子邮箱：</p>
+                    <p id="email" contenteditable="true" class="tcp-text"></p>
+                </div>
+            </div>
+            <div class="tc-btn-con">
+                <span class="tc-cancel" id="coo-cancel">取消</span>
+                <span class="tc-submit" id="coo-submit">提交</span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+#!/bin/bash
+set -e
+BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+
+function check_docker {
+	if ! docker --version &> /dev/null
+	then
+		echo "docker no exist and Need to install it now."
+		. "${BASE_DIR}/docker_install.sh"
+	else
+		echo "docker exist." 
+	fi
+}
+
+function check_dockercompose {
+	if ! docker-compose --version &> /dev/null
+	then
+		echo "docker-compose no exist and Need to install it now."
+		. "${BASE_DIR}/docker-compose_install.sh"
+	else
+		echo "docker-compose exist."
+	fi
+}
+
+function install {
+	check_docker
+	check_dockercompose
+	
+}
+
+install

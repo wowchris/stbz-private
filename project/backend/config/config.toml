@@ -1,0 +1,121 @@
+# HTTP Server
+[server]
+	Address     = ":8199"
+	ServerRoot  = "public"
+	ServerAgent = "gf-app"
+	LogPath     = "./logs/server"
+        ClientMaxBodySize = "30MB"
+
+# Logger.
+[logger]
+    Path        = "./logs"
+    Level       = "all"
+    Stdout      = true
+    CtxKeys = ["RequestId", "URI","app_id","uid"]
+
+# Template.
+[viewer]
+    Path        = "template"
+    DefaultFile = "index.html"
+    Delimiters  =  ["{{{", "}}}"]
+
+# Database.
+[database]
+    link  = "mysql:@tcp(HOST_IP:3306)/middleground"
+    debug = true
+    timeMaintainDisabled = true
+    # Database logger.
+    [database.logger]
+        Path   = "./logs/sql"
+        Level  = "all"
+        Stdout = true
+	CtxKeys = ["RequestId"]
+
+[gtoken]
+    # 缓存模式 1 gcache 2 gredis
+    cache-mode = 2
+    # 是否支持多端登录
+    multi-login = true
+    timeout = 370 #分钟
+
+[sms.aliyun]
+    debug = false
+#[redis]
+#    default = "HOST_IP:6379,3,middleground2022?idleTimeout=600"
+#    redis6 = "HOST_IP:6379,3,middleground2022?idleTimeout=600"
+#    redis8 = "HOST_IP:6379,8,middleground2022?idleTimeout=600"
+#    redis1 = "HOST_IP:6379,1,middleground2022?idleTimeout=600"
+[redis.default]
+    address = "HOST_IP:6379"
+    db = 6
+    pass = "middleground2022"
+    idleTimeout = "600s"
+
+[redis.redis6]
+	address = "HOST_IP:6379"
+	db = 6
+	pass = "middleground2022"
+	idleTimeout = "600s"
+
+[redis.redis8]
+	address = "HOST_IP:6379"
+	db = 8
+	pass = "middleground2022"
+	idleTimeout = "600s"
+
+[redis.redis1]
+	address = "HOST_IP:6379"
+	db = 1
+	pass = "middleground2022"
+	idleTimeout = "600s"
+
+[gfcli]
+     [[gfcli.gen.dao]]
+         link     = "mysql:root:middleground2022@tcp(HOST_IP:3306)/middleground"
+         jsonCase = "Snake"
+         removePrefix = "stbz_"
+
+
+[system]
+    notCheckAuthAdminIds = [1]  #无需验证后台权限的用户id
+    dataDir = "./data"
+#casbin配置
+[casbin]
+    modelFile="./config/casbin_conf/rbac_model.conf"
+    policyFile="./config/casbin_conf/rbac_policy.csv"
+
+
+[Es]
+	Url = "HOST_IP:9200"
+	UserName = "elastic"
+	Password = "middleground2022"
+	IndexGoods = "private_index"
+[nsq]
+    addr = "HOST_IP:4150"
+[nsqmsg]
+ newUrl = "http://HOST_IP:4151/pub?topic=newShopApi"
+
+[bondPay]
+    returnUrl  = "http://sj.jxhh.com/returnurl"
+
+[goodsSelection]
+    count=30
+
+
+[sender]
+    notifyNum = 1      #通知处理客户端数
+    senderNum = 1     #发送客户端连接数
+
+
+[crontab]
+    [crontab.pattern]
+	AddGoods =  "0 0 2 * * *"    #添加商品
+	AddPartition =  "0 0 1 * * *"    #分区写入sls
+	GetJdGoodsDetail =  "0 */1 * * * *"    #获取京东标题
+
+
+ [excel.export]
+    FilePath    = "./download/"
+    WebUrl = "http://download.domain_name"
+
+

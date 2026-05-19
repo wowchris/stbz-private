@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1">
+    <meta name="Keywords" content={{{.channelSite.keywords}}}>
+    <meta name="Description" content={{{.channelSite.describe}}}>
+    <title>{{{.channelSite.title}}}</title>
+</head>
+<body>
+<div class="aboutus-main mb-aboutus-main private-pc">
+    <!--  公用header  -->
+    <header>{{{include  "./template/web/html/pc-header.html" .}}}</header>
+
+    <!-- banner -->
+    <div class="about-main-nav mb-about-main-nav"></div>
+    <!-- main -->
+    <div class="about-main mb-about-main">
+        <div class="about-nav-con mb-about-nav-con">
+            <ul>
+                <li class="abs-nav-title mb-abs-nav-title">
+                    企业简介
+                </li>
+                <li class="abs-nav-title mb-abs-nav-title">
+                    发展历程
+                </li>
+                <li class="abs-nav-title mb-abs-nav-title">
+                    荣誉资质
+                </li>
+                <li class="abs-nav-title mb-abs-nav-title">
+                    团队介绍
+                </li>
+                <li class="abs-nav-title mb-abs-nav-title">
+                    新闻动态
+                </li>
+                <!--            <li>-->
+                <!--                <a class="abs-nav-title" href="">联系我们</a>-->
+                <!--            </li>-->
+            </ul>
+        </div>
+        <div class="about-details-con mb-about-details-con">
+            <!--  企业简介  -->
+            <div class="ads-con mb-ads-con introduce">
+                <p>{{{.profile.text}}}
+                </p>
+                <div class="intro-con">
+                    {{{range $k,$v :=  .profile_image_url}}}
+                    <div class="intro-pre-con">
+                        <img class="intro-pre-img" src="{{{$v}}}"/>
+                    </div>
+                    {{{end}}}
+<!--                    <div class="intro-pre-con">-->
+<!--                        <p class="intro-title">-->
+<!--                            <span class="intro-title-num">200</span>-->
+<!--                            <span class="intro-title-unit">万+</span>-->
+<!--                            <span class="intro-desc">大品牌货源</span>-->
+<!--                        </p>-->
+<!--                        <p class="intro-text">-->
+<!--                            200万+优质货源，京东、阿里、天猫、苏宁同仓同品发货-->
+<!--                        </p>-->
+<!--                    </div>-->
+                </div>
+            </div>
+            <!--  发展历程  -->
+            <div class="ads-con mb-ads-con dev-history">
+                {{{if gt (len .frontExperienceList) 0 }}}
+                {{{range $key, $value := .frontExperienceList}}}
+                <div class="dev-pre-con">
+                    <div class="dev-y-con">
+                        <p class="dev-y">{{{ $value.year}}}</p>
+                        <span class="dev-y-spot"></span>
+                        <img class="first-spot" src="/web/image/first-spot.png" alt="">
+                    </div>
+                    {{{range $k, $v := $value.list}}}
+                    <ul class="dev-artical">
+                        <li class="dev-li">
+                            <p class="dev-li-month">{{{ $v.month}}}月</p>
+                            <p class="dev-desc-text">{{{ $v.content}}}</p>
+                        </li>
+                    </ul>
+                    {{{end}}}
+                </div>
+                {{{end}}}
+                {{{end}}}
+            </div>
+            <!--  荣誉资质  -->
+            <div class="ads-con mb-ads-con honor-img">
+                <div class="honor-img-main">
+                    {{{if gt (len .qualificationList) 0 }}}
+                    {{{range $key, $value := .qualificationList}}}
+                    <div class="hi-pre">
+                        <img class="h-img" src="{{{$value.image_url}}}" alt="">
+                        <p class="h-title">{{{$value.name}}}</p>
+                    </div>
+                    {{{end}}}
+                    {{{end}}}
+                </div>
+            </div>
+            <!--  团队介绍  -->
+            <div class="ads-con mb-ads-con team-introduction">
+                <div class="team-intro-main">
+                    {{{if gt (len .teamList) 0 }}}
+                    {{{range $key, $value := .teamList}}}
+                    <div class="team-pre-con">
+                        <img class="team-img team-img-spec" src="{{{$value.member_url}}}" alt="">
+                        <div class="team-desc-con">
+                            <p class="team-name {{{ if eq $key 0 }}}team-name-spe {{{end}}}">{{{$value.member_name}}}</p>
+                            <p class="team-title {{{ if eq $key 0 }}}team-title-spe {{{end}}}">{{{$value.member_position}}}</p>
+                            <p class="team-text">
+                                {{{$value.member_duty}}}
+                            </p>
+                        </div>
+                    </div>
+                    {{{end}}}
+                    {{{end}}}
+                </div>
+            </div>
+            <!--  新闻动态  -->
+            <div class="ads-con mb-ads-con news-artical">
+                <div class="na-main">
+                    {{{if gt (len .new) 0 }}}
+                    {{{range $key, $value := .new}}}
+                    <div class="na-pre-con">
+                        <div class="na-time-con">
+                            <p class="na-time-day">{{{$key | plus 1}}}</p>
+                            <p class="na-time-year">{{{ $value.create_time | date "Y-m" }}}</p>
+                        </div>
+                        <div class="na-artical-con">
+                            <p class="na-title"><a target="_blank" href="./news?id={{{$value.id}}}" >{{{$value.title}}}</a></p>
+                            <p class="na-text">{{{$value.abstract}}}</p>
+                        </div>
+                    </div>
+                    {{{end}}}
+                    {{{end}}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--  公用 footer  -->
+    <footer>{{{include  "./template/web/html/pc-footer.html" .}}}</footer>
+    <!-- 联系我们 PC-->
+    <div class="contact-us-main">
+        {{{include  "./template/web/html/pc-contactus.html" .}}}
+    </div>
+</div>
+<div class="aboutus-main mb-aboutus-main private-mobile">
+    <!--  公用header  -->
+
+    <header>{{{include  "./template/web/html/mobile-header.html" .}}}</header>
+
+    <!-- banner -->
+    <div class="about-main-nav mb-about-main-nav"></div>
+    <!-- main -->
+    <div class="about-main mb-about-main">
+        <div class="about-nav-con mb-about-nav-con mb-about-nav-con-spe">
+            <ul>
+                <li class="abs-nav-title mb-abs-nav-title">
+                    企业简介
+                </li>
+                <li class="abs-nav-title mb-abs-nav-title">
+                    发展历程
+                </li>
+                <li class="abs-nav-title mb-abs-nav-title">
+                    荣誉资质
+                </li>
+                <li class="abs-nav-title mb-abs-nav-title">
+                    团队介绍
+                </li>
+                <li class="abs-nav-title mb-abs-nav-title">
+                    新闻动态
+                </li>
+                <!--            <li>-->
+                <!--                <a class="abs-nav-title" href="">联系我们</a>-->
+                <!--            </li>-->
+            </ul>
+        </div>
+        <div class="about-details-con mb-about-details-con">
+            <!--  企业简介  -->
+            <div class="ads-con mb-ads-con mb-spe-ads-con introduce">
+                <p>{{{.profile.text}}}
+                </p>
+                <div class="intro-con">
+                    {{{range $k,$v :=  .profile_image_url}}}
+                    <div class="intro-pre-con">
+                        <img class="intro-pre-img" src="{{{$v}}}"/>
+                    </div>
+                    {{{end}}}
+
+<!--                    <div class="intro-pre-con">-->
+<!--                        <p class="intro-title">-->
+<!--                            <span class="intro-title-num">200</span>-->
+<!--                            <span class="intro-title-unit">万+</span>-->
+<!--                            <span class="intro-desc">大品牌货源</span>-->
+<!--                        </p>-->
+<!--                        <p class="intro-text">-->
+<!--                            200万+优质货源，京东、阿里、天猫、苏宁同仓同品发货-->
+<!--                        </p>-->
+<!--                    </div>-->
+                </div>
+            </div>
+            <!--  发展历程  -->
+            <div class="ads-con mb-ads-con mb-spe-ads-con dev-history">
+                {{{if gt (len .frontExperienceList) 0 }}}
+                {{{range $key, $value := .frontExperienceList}}}
+                <div class="dev-pre-con">
+                    <div class="dev-y-con">
+                        <p class="dev-y">{{{ $value.year}}}</p>
+                        <span class="dev-y-spot"></span>
+                        <img class="first-spot" src="/web/image/first-spot.png" alt="">
+                    </div>
+                    {{{range $k, $v := $value.list}}}
+                    <ul class="dev-artical">
+                        <li class="dev-li">
+                            <p class="dev-li-month">{{{ $v.month}}}月</p>
+                            <p class="dev-desc-text">{{{ $v.content}}}</p>
+                        </li>
+                    </ul>
+                    {{{end}}}
+                </div>
+                {{{end}}}
+                {{{end}}}
+            </div>
+            <!--  荣誉资质  -->
+            <div class="ads-con mb-ads-con mb-spe-ads-con honor-img">
+                <div class="honor-img-main">
+                    {{{if gt (len .qualificationList) 0 }}}
+                    {{{range $key, $value := .qualificationList}}}
+                    <div class="hi-pre">
+                        <img class="h-img" src="{{{$value.image_url}}}" alt="">
+                        <p class="h-title">{{{$value.name}}}</p>
+                    </div>
+                    {{{end}}}
+                    {{{end}}}
+                </div>
+            </div>
+            <!--  团队介绍  -->
+            <div class="ads-con mb-ads-con mb-spe-ads-con team-introduction">
+                <div class="team-intro-main">
+                    {{{if gt (len .teamList) 0 }}}
+                    {{{range $key, $value := .teamList}}}
+                    <div class="team-pre-con">
+                        <img class="team-img team-img-spec" src="{{{$value.member_url}}}" alt="">
+                        <div class="team-desc-con">
+                            <p class="team-name {{{ if eq $key 0 }}}team-name-spe {{{end}}}">{{{$value.member_name}}}</p>
+                            <p class="team-title {{{ if eq $key 0 }}}team-title-spe {{{end}}}">{{{$value.member_position}}}</p>
+                            <p class="team-text">
+                                {{{$value.member_duty}}}
+                            </p>
+                        </div>
+                    </div>
+                    {{{end}}}
+                    {{{end}}}
+                </div>
+            </div>
+            <!--  新闻动态  -->
+            <div class="ads-con mb-ads-con mb-spe-ads-con news-artical">
+                <div class="na-main">
+                    {{{if gt (len .new) 0 }}}
+                    {{{range $key, $value := .new}}}
+                    <div class="na-pre-con">
+                        <div class="na-time-con">
+                            <p class="na-time-day">{{{$key | plus 1}}}</p>
+                            <p class="na-time-year">{{{ $value.create_time | date "Y-m" }}}</p>
+                        </div>
+                        <div class="na-artical-con">
+                            <p class="na-title"><a target="_blank" href="./news?id={{{$value.id}}}" >{{{$value.title}}}</a></p>
+                            <p class="na-text">{{{$value.abstract}}}</p>
+                        </div>
+                    </div>
+                    {{{end}}}
+                    {{{end}}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--  公用 footer  -->
+    <footer>{{{include  "./template/web/html/mobile-footer.html" .}}}</footer>
+    <!-- 联系我们 PC-->
+    <div class="contact-us-main">
+        {{{include  "./template/web/html/mobile-contactus.html" .}}}
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" src="/web/js/jquery-2.2.4.min.js"></script>
+<script>
+    window.onload = function () {
+        /** 仅对官网进行 所有适配
+         * 当 可视区域 小于 960 时，进行 移动端适配
+         * 对 html 根目录 的font-size 进行设置 */
+
+        let isPC = true;
+        ;(function () {
+            // 获取屏幕区域的宽度
+            let w = document.documentElement.clientWidth;
+            // 获取html根元素
+            let htmlNode = document.querySelector('html')
+            if (w < 961) {
+                isPC = false;
+                htmlNode.style.fontSize = w / 750 * 50 * 2 + 'px'
+            }else {
+                isPC = true
+                htmlNode.style.fontSize = 16 + 'px'
+            }
+        })();
+        let ht = document.location.protocol;
+        // PC端
+        if (isPC) {
+            /** 注册 */
+            $("#register").on('click',function () {
+                // 先调用 退出登陆接口，再执行下述操作
+                window.location.href = ht + '//' + '{{{ .channelSite.ssoDomain}}}' + '/login.html?redirect=' + ht + '//{{{ .channelSite.openDomain}}}/loginticket';
+            })
+            /** 登陆 */
+            $("#login").on('click',function () {
+                window.location.href = ht + '//' + '{{{ .channelSite.ssoDomain}}}' + '/login.html?redirect=' + ht + '//{{{ .channelSite.openDomain}}}/loginticket';
+            })
+            // 样式
+            $("<link>").attr({rel: "stylesheet", type: "text/css", href: "/web/css/pc.css?" + new Date().getTime()}).appendTo("head");
+            $("<link>").attr({rel: "stylesheet", type: "text/css", href: "/web/css/pc-aboutus.css?" + new Date().getTime()}).appendTo("head");
+
+            $('.private-pc').show();
+            $('.private-mobile').hide();
+            // 引入 header
+            // $('header').load('html/pc-header.html');
+            //
+            // // 引入 footer
+            // $('footer').load('html/pc-footer.html');
+            //
+            // // 联系我们
+            // $('.contact-us-main').load('html/pc-contactus.html');
+
+            $(".aboutus-main").scroll(function(){
+                pcHeaderScroll();
+            });
+            let MBHREF = window.location.href
+            let ids = Number(MBHREF.charAt(MBHREF.length - 1)) ? Number(MBHREF.charAt(MBHREF.length - 1)) : 0;
+            // let ids = Number(getUrlParam('id'))
+            let idsList = [1,2,3,4,5]
+            if (idsList.indexOf(ids) === -1) {
+                ids = 1
+            }
+            console.log(ids)
+            pcNavSwitch(ids);
+
+
+
+        // 移动端 start
+        } else {
+            /** 注册 */
+            $("#mbRegister").on('click',function () {
+                // 先调用 退出登陆接口，再执行下述操作
+                window.location.href = ht + '//' + '{{{ .channelSite.ssoDomain}}}' + '/login.html?redirect=' + ht + '//{{{ .channelSite.openDomain}}}/loginticket';
+            })
+            /** 登陆 */
+            $("#mbLogin").on('click',function () {
+                window.location.href = ht + '//' + '{{{ .channelSite.ssoDomain}}}' + '/login.html?redirect=' + ht + '//{{{ .channelSite.openDomain}}}/loginticket';
+            })
+            // css
+            $("<link>").attr({rel: "stylesheet", type: "text/css", href: "/web/css/mobile.css?" + new Date().getTime()}).appendTo("head");
+            $("<link>").attr({rel: "stylesheet", type: "text/css", href: "/web/css/mobile-aboutus.css?" + new Date().getTime()}).appendTo("head");
+            $('.private-pc').hide();
+            $('.private-mobile').show();
+
+            // // 引入 header
+            // $('header').load('html/mobile-header.html',function () {
+            //     mbMenuOpen();
+            //     mbMenuClose();
+            // });
+            //
+            // // 引入 footer
+            // $('footer').load('html/mobile-footer.html');
+            //
+            // // 联系我们
+            // $('.contact-us-main').load('html/mobile-contactus.html',function () {
+            //     mbContactUsSwitch();
+            // });
+            mbMenuOpen();
+            mbMenuClose();
+            mbContactUsSwitch();
+            let MBHREF = window.location.href
+            let ids = Number(MBHREF.charAt(MBHREF.length - 1)) ? Number(MBHREF.charAt(MBHREF.length - 1)) : 0;
+            // ids 最小将会从1开始（1-5）
+            let idsList = [1,2,3,4,5]
+            if (idsList.indexOf(ids) === -1) {
+                ids = 1
+            }
+            mbNavSwitch(ids-1);
+        }
+        // 移动端 end
+
+        /** PC nav 滚动效果 */
+        function pcHeaderScroll () {
+            let st = $(".aboutus-main").scrollTop();
+            if (st > 100) {
+                $('header').addClass('scroll-active')
+            } else if (st < 100) {
+                $('header').removeClass('scroll-active')
+            }
+        }
+
+        /** PC nav 点击交互 */
+        function pcNavSwitch(ids) {
+
+            // console.log(276,ids);
+            // $('.abs-nav-title').eq(0).addClass('ads-nav-title-active')
+            // $(".ads-con").eq(0).addClass("block-import")
+            if (ids) {
+                $('.abs-nav-title').eq(ids-1).addClass('ads-nav-title-active')
+                $(".ads-con").eq(ids-1).addClass("block-import")
+            }
+
+            $('.abs-nav-title').on('click',function() {
+                $('.abs-nav-title').removeClass("ads-nav-title-active");
+                $(this).addClass("ads-nav-title-active")
+                $(".ads-con").removeClass("block-import")
+                $(".ads-con").eq($(this).index()).addClass("block-import")
+            });
+        }
+
+        /** mobile menu 展开菜单 */
+        function mbMenuOpen() {
+            $("#mbhMenu").on("click",function () {
+                $(".mb-header-menu").animate({right: 0},250,"linear");
+            });
+        }
+
+        /** mobile menu 收缩菜单 */
+        function mbMenuClose() {
+            $("#mb-menu-close-x").on("click",function () {
+                $(".mb-header-menu").animate({right: "-2.7rem"},250,"linear");
+            });
+        }
+
+        /** mobile 联系我们 交互 */
+        function mbContactUsSwitch() {
+            $(".cu-click").on("click",function() {
+                if ($(this).find(".cu-click-toggle").hasClass("mb-block-import")) {
+                    $(this).find(".cu-click-toggle").removeClass("mb-block-import")
+                }else {
+                    $(".cu-click-toggle").removeClass("mb-block-import")
+                    $(this).find(".cu-click-toggle").addClass("mb-block-import")
+                }
+            })
+        }
+
+        /** mobile nav 点击交互 */
+        function mbNavSwitch(ids) {
+            $('.mb-about-nav-con-spe > ul > li').eq(ids).addClass('mb-ads-nav-title-active')
+            $(".mb-spe-ads-con").eq(ids).addClass("mb-block-import")
+
+            $('.mb-abs-nav-title').on('click', function () {
+                $('.mb-abs-nav-title').removeClass("mb-ads-nav-title-active");
+                $(this).addClass("mb-ads-nav-title-active")
+                $(".mb-spe-ads-con").removeClass("mb-block-import")
+
+                $(".mb-spe-ads-con").eq($(this).index()).addClass("mb-block-import")
+            });
+        }
+
+        function getUrlParam(name) {
+            let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            let r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]);
+            return null; //返回参数值
+        }
+    }
+</script>
+</html>
