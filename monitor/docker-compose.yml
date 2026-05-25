@@ -1,0 +1,13 @@
+services:
+  monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: go-monitor
+    network_mode: bridge
+    restart: always
+    ports:
+      - "9999:9999"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./config.json:/app/config.json

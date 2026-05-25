@@ -1,0 +1,29 @@
+{
+  "web_username": "admin",
+  "web_password": "admin123",
+  "max_cpu_percent": 80,
+  "max_mem_mb": 1024,
+  "max_nsq_depth": 10000,
+  "check_interval": 5,
+  "docker_check_interval": 10,
+  "alert_email": "",
+  "alert_webhook": "",
+  "services": {
+    "nginx": {
+      "url": "http://nginx:80/nginx_status",
+      "timeout": 2
+    },
+    "redis": {
+      "address": "redis:6379",
+      "timeout": 2
+    },
+    "nsq": {
+      "url": "http://nsqd:4151/stats?format=json",
+      "timeout": 2
+    },
+    "elasticsearch": {
+      "url": "http://elasticsearch:9200/_cluster/health",
+      "timeout": 3
+    }
+  }
+}
