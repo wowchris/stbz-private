@@ -1,63 +1,76 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
 
-# 判断用户，非 root 用户无法执行安装
-if [ $USER != "root" ]
-then
+BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+source "${BASE_DIR}/main.sh"
+Get_System_Name
+
+if [ "${USER:-}" != "root" ]; then
     echo "ERROR: Unable to perform installation as non-root user."
-    exit
+    exit 1
 fi
 
-
-#环境配置
-systemctl stop firewalld && systemctl disable firewalld
-setenforce 0
-
-#安装依赖包
-yum -y install yum-utils device-mapper-persistemt-data lvm2
-
-#设置阿里云镜像源
-cd /etc/yum.repos.d/
-yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
-
-#安装 docker-ce 
-yum -y install docker-ce
-#curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
-
-yum install -y bash-completion && source /usr/share/bash-completion/bash_completion
-
-#配置阿里云镜像加速（尽量使用自己的）
-#地址 https://help.aliyun.com/document_detail/60750.html
-mkdir -p /etc/docker
-tee /etc/docker/daemon.json <<-'EOF'
+configure_docker_daemon() {
+    mkdir -p /etc/docker
+    if [ ! -f /etc/docker/daemon.json ]; then
+        cat > /etc/docker/daemon.json <<'EOF'
 {
-  "registry-mirrors": ["https://n27609rs.mirror.aliyuncs.com"]
+  "registry-mirrors": ["https://registry.cn-hangzhou.aliyuncs.com"]
 }
 EOF
- systemctl daemon-reload
+    fi
+    systemctl daemon-reload || true
+    sysctl -w net.ipv4.ip_forward=1 || true
+}
 
-#网络优化
-cat >> /etc/sysctl.conf <<EOF
-net.ipv4.ip_forward=1
-EOF
+install_docker_yum() {
+    if command -v firewall-cmd >/dev/null 2>&1; then
+        systemctl stop firewalld || true
+        systemctl disable firewalld || true
+    fi
+    if command -v setenforce >/dev/null 2>&1; then
+        setenforce 0 || true
+    fi
 
-sysctl -p
-systemctl restart network
-systemctl enable docker && systemctl restart docker
+    yum -y install yum-utils device-mapper-persistent-data lvm2
+    yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+    yum makecache fast
+    yum -y install docker-ce docker-ce-cli containerd.io
+    yum -y install bash-completion || true
+    source /usr/share/bash-completion/bash_completion || true
+}
 
-# subnet for elk
-docker network  create  -d bridge --subnet=192.168.210.0/24 --gateway=192.168.210.1 -o parent=eth0 staticnet
+install_docker_apt() {
+    apt-get update
+    apt-get install -y ca-certificates curl gnupg lsb-release software-properties-common
+    mkdir -p /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+    apt-get update
+    apt-get install -y docker-ce docker-ce-cli containerd.io
+}
 
+case "${PM:-yum}" in
+    yum)
+        install_docker_yum
+        ;;
+    apt)
+        install_docker_apt
+        ;;
+    *)
+        echo "Unsupported package manager: ${PM:-unknown}"
+        exit 1
+        ;;
+esac
 
-# 安装验证
-docker_install_success=`docker -v|grep -o version`
+configure_docker_daemon
+systemctl enable docker
+systemctl restart docker
 
-if [ $"$docker_install_success" ]
-then
-	echo "docker install  successd "
-else
-	echo "ERROR: docker install failed."
-	exit
-
+if ! docker --version >/dev/null 2>&1; then
+    echo "ERROR: docker install failed."
+    exit 1
 fi
 
-
+echo "docker install success"

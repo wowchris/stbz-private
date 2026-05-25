@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  # MySQL 服务
+  mysql:
+    image: mysql:5.7
+    container_name: mysql5.7
+    restart: always
+    networks:
+      - app_network
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/conf/my.cnf:/etc/mysql/my.cnf
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USER}
+    command: [
+      '--character-set-server=utf8mb4',
+      '--collation-server=utf8mb4_general_ci',
+      '--max_connections=3000',
+      '--max_allowed_packet=1024M',
+      '--lower_case_table_names=1'
+    ]
+
+networks:
+  app_network:
+    external: true  # 使用外部定义的网络

@@ -1,29 +1,28 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
 
-# 判断用户，非 root 用户无法执行安装
-if [ $USER != "root" ]
-then
+if [ "${USER:-}" != "root" ]; then
     echo "ERROR: Unable to perform installation as non-root user."
-    exit
+    exit 1
 fi
 
-# 国内镜像
-curl -L https://get.daocloud.io/docker/compose/releases/download/1.29.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose    || ceho "Download docker-compose fails, check the network is normal"
+COMPOSE_BIN=/usr/local/bin/docker-compose
+mkdir -p "$(dirname "$COMPOSE_BIN")"
 
-chmod +x /usr/local/bin/docker-compose  && ln -sf /usr/local/bin/docker-compose  /usr/bin/docker-compose
-
-docker-compose --version
-dockercompose_install_success=`docker-compose --version|grep -o version`
-
-#安装验证
-if [ $"$dockercompose_install_success" ]
-then
-	echo "docker-compose install  successd "
+if command -v curl >/dev/null 2>&1; then
+    curl -L "https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-$(uname -s)-$(uname -m)" -o "$COMPOSE_BIN"
 else
-	echo "ERROR: docker-compose install failed."
-	exit
-
+    echo "ERROR: curl is required to install docker-compose."
+    exit 1
 fi
 
+chmod +x "$COMPOSE_BIN"
+ln -sf "$COMPOSE_BIN" /usr/bin/docker-compose
 
+if ! docker-compose --version >/dev/null 2>&1; then
+    echo "ERROR: docker-compose install failed."
+    exit 1
+fi
 
+echo "docker-compose install success"

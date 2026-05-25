@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # Elasticsearch 服务
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.7.0
+    container_name: elasticsearch
+    restart: always
+    networks:
+      - app_network
+    volumes:
+      - ./elk/elasticsearch/data:/usr/share/elasticsearch/data
+      - ./elk/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+
+  # Kibana 服务
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.7.0
+    container_name: kibana
+    restart: always
+    networks:
+      - app_network
+    volumes:
+      - ./elk/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - SERVER_NAME=kibana
+    depends_on:
+      - elasticsearch
+
+networks:
+  app_network:
+    external: true  # 使用外部定义的网络

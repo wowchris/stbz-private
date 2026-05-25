@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  # Redis 服务
+  redis:
+    image: redis:5.0
+    container_name: redis5.0
+    restart: always
+    networks:
+      - app_network
+    volumes:
+      - ./redis/data:/data
+      - ./redis/redis.conf:/etc/redis.conf
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    command: ["redis-server", "/etc/redis.conf", "--requirepass", "${REDIS_PASSWORD}"]
+
+networks:
+  app_network:
+    external: true  # 使用外部定义的网络

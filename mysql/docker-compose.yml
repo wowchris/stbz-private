@@ -1,11 +1,13 @@
 version: '3.8'  # 兼容主流Docker版本
 
+env_file:
+  - ../.env
+
 services:
   mysql5.7:
     image: mysql:5.7  # 固定MySQL 5.7版本
     restart: always  # 容器退出后自动重启
     container_name: mysql5.7  # 固定容器名称，方便管理
-    network_mode: bridge  # 使用桥接网络
     environment:
       - TZ=Asia/Shanghai  # 容器系统时区（东八区）
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}  # 从环境变量获取root密码（需提前export DB_PASSWORD=你的密码）
@@ -15,9 +17,9 @@ services:
     ports:
       - "3306:3306"  # 端口映射（宿主机:容器）
     volumes:
-      - $PWD/log:/var/log/mysql  # 日志持久化
-      - $PWD/conf/my.cnf:/etc/mysql/my.cnf  # 自定义配置文件
-      - $PWD/data:/var/lib/mysql  # 数据持久化（核心）
+      - ./log:/var/log/mysql  # 日志持久化
+      - ./conf/my.cnf:/etc/mysql/my.cnf  # 自定义配置文件
+      - ./data:/var/lib/mysql  # 数据持久化（核心）
       - /etc/timezone:/etc/timezone:ro  # 挂载宿主机时区定义（只读）
       - /etc/localtime:/etc/localtime:ro  # 挂载宿主机本地时间（只读，强制同步）
     command: [
@@ -26,6 +28,8 @@ services:
       '--max_connections=3000',  # 最大连接数
       '--default-time-zone=+08:00',  # MySQL服务时区（东八区，与容器一致）
       '--explicit_defaults_for_timestamp=1',  # 解决TIMESTAMP默认值警告
-      '--max_allowed_packet=1024M',  # 最大数据包大小（避免导入大文件报错）
-      '--lower_case_table_names=1'  # 表名不区分大小写（根据需求调整，0为区分）
     ]
+
+networks:
+  default:
+    driver: bridge

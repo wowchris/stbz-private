@@ -1,5 +1,8 @@
 version: '3.7'
 
+env_file:
+  - ../.env
+
 services:
   setup:
     build:
@@ -8,7 +11,7 @@ services:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     init: true
     volumes:
-      - setup:/state:Z
+      - ./setup/state:/state:Z
     environment:
       TZ: 'Asia/Shanghai'
       ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
@@ -24,7 +27,7 @@ services:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
       - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
-      - elasticsearch:/usr/share/elasticsearch/data:Z
+      - ./elasticsearch/data:/usr/share/elasticsearch/data:Z
       - ./elasticsearch/config/jvm.options.d/timezone.options:/usr/share/elasticsearch/config/jvm.options.d/timezone.options:ro,Z
 
     ports:
@@ -53,15 +56,18 @@ services:
     volumes:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
       - ./logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
+      - ./logstash/config/jvm.options.d/timezone.options:/usr/share/logstash/config/jvm.options.d/timezone.options:ro,Z
+      - ./logstash/data:/usr/share/logstash/data:Z
     ports:
       - 5044:5044
-      - 50000:50000/tcp
-      - 50000:50000/udp
+      - 5000:5000/tcp
+      - 5000:5000/udp
       - 9600:9600
     environment:
-      TZ: 'Asia/Shanghai'
       LS_JAVA_OPTS: -Xms1g -Xmx1g
+      ELASTICSEARCH_URL: http://elasticsearch:9200
       LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD}
+      TZ: 'Asia/Shanghai'
     networks:
       - elk
     depends_on:
@@ -75,11 +81,14 @@ services:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
       - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
+      - ./kibana/config/jvm.options.d/timezone.options:/usr/share/kibana/config/jvm.options.d/timezone.options:ro,Z
     ports:
       - 5601:5601
     environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_USERNAME: kibana_system
+      ELASTICSEARCH_PASSWORD: ${KIBANA_SYSTEM_PASSWORD}
       KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD}
-      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
       TZ: 'Asia/Shanghai'
     networks:
       - elk
@@ -92,5 +101,4 @@ networks:
     driver: bridge
 
 volumes:
-  elasticsearch:
-  setup:
+  # 移除所有自定义卷，使用相对路径挂载

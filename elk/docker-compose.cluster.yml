@@ -1,0 +1,168 @@
+version: '3.7'
+
+env_file:
+  - ../.env
+
+services:
+  setup:
+    build:
+      context: setup/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    init: true
+    volumes:
+      - ./setup/state:/state:Z
+    environment:
+      TZ: 'Asia/Shanghai'
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
+      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD}
+      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD}
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch1
+      - elasticsearch2
+      - elasticsearch3
+
+  elasticsearch1:
+    build:
+      context: elasticsearch/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    volumes:
+      - ./elasticsearch/config/elasticsearch.cluster.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
+      - ./elasticsearch/data1:/usr/share/elasticsearch/data:Z
+      - ./elasticsearch/config/jvm.options.d/timezone.options:/usr/share/elasticsearch/config/jvm.options.d/timezone.options:ro,Z
+    ports:
+      - "9200:9200"
+    environment:
+      node.name: elasticsearch1
+      cluster.name: docker-cluster
+      cluster.initial_master_nodes: elasticsearch1,elasticsearch2,elasticsearch3
+      discovery.seed_hosts: elasticsearch1,elasticsearch2,elasticsearch3
+      cluster.routing.allocation.disk.threshold_enabled: false
+      bootstrap.memory_lock: "true"
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
+      ES_JAVA_OPTS: -Xms2g -Xmx2g
+      TZ: 'Asia/Shanghai'
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - elk
+    restart: unless-stopped
+
+  elasticsearch2:
+    build:
+      context: elasticsearch/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    volumes:
+      - ./elasticsearch/config/elasticsearch.cluster.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
+      - ./elasticsearch/data2:/usr/share/elasticsearch/data:Z
+      - ./elasticsearch/config/jvm.options.d/timezone.options:/usr/share/elasticsearch/config/jvm.options.d/timezone.options:ro,Z
+    ports:
+      - "9201:9200"
+    environment:
+      node.name: elasticsearch2
+      cluster.name: docker-cluster
+      cluster.initial_master_nodes: elasticsearch1,elasticsearch2,elasticsearch3
+      discovery.seed_hosts: elasticsearch1,elasticsearch2,elasticsearch3
+      cluster.routing.allocation.disk.threshold_enabled: false
+      bootstrap.memory_lock: "true"
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
+      ES_JAVA_OPTS: -Xms2g -Xmx2g
+      TZ: 'Asia/Shanghai'
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - elk
+    restart: unless-stopped
+
+  elasticsearch3:
+    build:
+      context: elasticsearch/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    volumes:
+      - ./elasticsearch/config/elasticsearch.cluster.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
+      - ./elasticsearch/data3:/usr/share/elasticsearch/data:Z
+      - ./elasticsearch/config/jvm.options.d/timezone.options:/usr/share/elasticsearch/config/jvm.options.d/timezone.options:ro,Z
+    ports:
+      - "9202:9200"
+    environment:
+      node.name: elasticsearch3
+      cluster.name: docker-cluster
+      cluster.initial_master_nodes: elasticsearch1,elasticsearch2,elasticsearch3
+      discovery.seed_hosts: elasticsearch1,elasticsearch2,elasticsearch3
+      cluster.routing.allocation.disk.threshold_enabled: false
+      bootstrap.memory_lock: "true"
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
+      ES_JAVA_OPTS: -Xms2g -Xmx2g
+      TZ: 'Asia/Shanghai'
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - elk
+    restart: unless-stopped
+
+  logstash:
+    build:
+      context: logstash/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    volumes:
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
+      - ./logstash/config/jvm.options.d/timezone.options:/usr/share/logstash/config/jvm.options.d/timezone.options:ro,Z
+      - ./logstash/data:/usr/share/logstash/data:Z
+    ports:
+      - 5044:5044
+      - 5000:5000/tcp
+      - 5000:5000/udp
+      - 9600:9600
+    environment:
+      LS_JAVA_OPTS: -Xms1g -Xmx1g
+      ELASTICSEARCH_URL: http://elasticsearch1:9200
+      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD}
+      TZ: 'Asia/Shanghai'
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch1
+      - elasticsearch2
+      - elasticsearch3
+    restart: unless-stopped
+
+  kibana:
+    build:
+      context: kibana/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
+      - ./kibana/config/jvm.options.d/timezone.options:/usr/share/kibana/config/jvm.options.d/timezone.options:ro,Z
+    ports:
+      - 5601:5601
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch1:9200
+      ELASTICSEARCH_USERNAME: kibana_system
+      ELASTICSEARCH_PASSWORD: ${KIBANA_SYSTEM_PASSWORD}
+      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD}
+      TZ: 'Asia/Shanghai'
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch1
+      - elasticsearch2
+      - elasticsearch3
+    restart: unless-stopped
+
+networks:
+  elk:
+    driver: bridge

@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  # NSQ 消息队列服务
+  nsqlookupd:
+    image: nsqio/nsq
+    container_name: nsq-lookupd
+    restart: always
+    command: /nsqlookupd
+    networks:
+      - app_network
+    volumes:
+      - ./nsq/data1:/data:rw
+
+  nsqd:
+    image: nsqio/nsq
+    container_name: nsqd
+    restart: always
+    command: /nsqd -lookupd-tcp-address=nsqlookupd:4160
+    networks:
+      - app_network
+    volumes:
+      - ./nsq/data1:/data:rw
+
+networks:
+  app_network:
+    external: true  # 使用外部定义的网络
